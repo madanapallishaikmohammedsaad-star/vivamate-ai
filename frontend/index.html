@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VivaMate AI</title>
+</head>
+
+<body>
+    <h1>VivaMate AI</h1>
+    <p>Your Engineering Exam Assistant</p>
+
+    <textarea id="question" placeholder="Ask your engineering question..."></textarea>
+
+    <br><br>
+
+    <button onclick="askVivaMate()">Ask VivaMate</button>
+
+    <h2>Answer</h2>
+    <div id="answer">Your answer will appear here.</div>
+
+    <script>
+        async function askVivaMate() {
+            const question = document.getElementById("question").value;
+            const answer = document.getElementById("answer");
+
+            answer.innerText = "VivaMate is thinking...";
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/ask", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+
+                const data = await response.json();
+                answer.innerText = data.answer;
+            } catch (error) {
+                answer.innerText = "Error connecting to VivaMate API.";
+            }
+        }
+    </script>
+</body>
+</html>
