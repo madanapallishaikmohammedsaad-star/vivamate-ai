@@ -41,7 +41,8 @@
             font-size: 18px;
         }
 
-        .card {
+        .card,
+        .answer-card {
             background: white;
             padding: 25px;
             border-radius: 16px;
@@ -51,6 +52,7 @@
         label {
             display: block;
             margin-bottom: 8px;
+            font-weight: bold;
         }
 
         select {
@@ -105,10 +107,6 @@
         .answer-card {
             display: none;
             margin-top: 25px;
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         .answer-heading {
@@ -118,9 +116,10 @@
             gap: 10px;
         }
 
-        #selectedMarks {
+        .answer-info {
             color: #4f46e5;
             font-weight: bold;
+            text-align: right;
         }
 
         #answer {
@@ -150,6 +149,11 @@
             .answer-heading {
                 display: block;
             }
+
+            .answer-info {
+                text-align: left;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
@@ -165,9 +169,36 @@
 
         <div class="card">
 
-            <label for="marks">
-                <strong>Select Answer Marks</strong>
-            </label>
+            <label for="subject">Select Subject</label>
+
+            <select id="subject">
+                <option value="General Engineering">
+                    General Engineering
+                </option>
+
+                <option value="Artificial Intelligence">
+                    Artificial Intelligence
+                </option>
+
+                <option value="Basic Electronics">
+                    Basic Electronics
+                </option>
+
+                <option value="Python Programming">
+                    Python Programming
+                </option>
+
+                <option value="Engineering Mathematics">
+                    Engineering Mathematics
+                </option>
+
+                <option value="Engineering Physics">
+                    Engineering Physics
+                </option>
+            </select>
+
+
+            <label for="marks">Select Answer Marks</label>
 
             <select id="marks">
                 <option value="2">2 Marks</option>
@@ -175,10 +206,12 @@
                 <option value="10">10 Marks</option>
             </select>
 
+
             <textarea
                 id="question"
                 placeholder="Ask an engineering exam question..."
             ></textarea>
+
 
             <button id="askButton" onclick="askVivaMate()">
                 Ask VivaMate
@@ -186,11 +219,18 @@
 
         </div>
 
+
         <div id="answerCard" class="answer-card">
 
             <div class="answer-heading">
+
                 <h2>Exam Answer</h2>
-                <span id="selectedMarks"></span>
+
+                <div class="answer-info">
+                    <div id="selectedSubject"></div>
+                    <div id="selectedMarks"></div>
+                </div>
+
             </div>
 
             <div id="answer"></div>
@@ -199,7 +239,9 @@
 
     </div>
 
+
     <script>
+
         const API_URL =
             "https://zany-computing-machine-69j46xg7qwgr354x7-8000.app.github.dev/ask";
 
@@ -212,6 +254,9 @@
             const marks =
                 parseInt(document.getElementById("marks").value);
 
+            const subject =
+                document.getElementById("subject").value;
+
             const answer =
                 document.getElementById("answer");
 
@@ -220,6 +265,9 @@
 
             const selectedMarks =
                 document.getElementById("selectedMarks");
+
+            const selectedSubject =
+                document.getElementById("selectedSubject");
 
             const button =
                 document.getElementById("askButton");
@@ -232,6 +280,8 @@
 
 
             answerCard.style.display = "block";
+
+            selectedSubject.innerText = subject;
 
             selectedMarks.innerText =
                 marks + " Marks Answer";
@@ -258,7 +308,8 @@
 
                     body: JSON.stringify({
                         question: question,
-                        marks: marks
+                        marks: marks,
+                        subject: subject
                     })
 
                 });
@@ -296,6 +347,7 @@
             }
 
         }
+
     </script>
 
 </body>
