@@ -3,44 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>VivaMate AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 42px;
+            margin: 0;
+            color: #4f46e5;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 130px;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            resize: vertical;
+            font-size: 16px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #4f46e5;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #4f46e5;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .answer-card {
+            display: none;
+            margin-top: 25px;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        #answer {
+            white-space: pre-wrap;
+            line-height: 1.7;
+        }
+
+        .loading {
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            .logo {
+                font-size: 34px;
+            }
+
+            .card,
+            .answer-card {
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>VivaMate AI</h1>
-    <p>Your Engineering Exam Assistant</p>
 
-    <textarea id="question" placeholder="Ask your engineering question..."></textarea>
+<div class="container">
 
-    <br><br>
+    <header class="header">
+        <h1 class="logo">VivaMate AI</h1>
+        <p class="subtitle">Your Engineering Exam Assistant</p>
+    </header>
 
-    <button onclick="askVivaMate()">Ask VivaMate</button>
+    <div class="card">
 
-    <h2>Answer</h2>
-    <div id="answer">Your answer will appear here.</div>
+        <textarea
+            id="question"
+            placeholder="Ask an engineering exam question..."
+        ></textarea>
 
-    <script>
-        async function askVivaMate() {
-            const question = document.getElementById("question").value;
-            const answer = document.getElementById("answer");
+        <button id="askButton" onclick="askVivaMate()">
+            Ask VivaMate
+        </button>
 
-            answer.innerText = "VivaMate is thinking...";
+    </div>
 
-            try {
-               const response = await fetch("https://zany-computing-machine-69j46xg7qwgr354x7-8000.app.github.dev/ask", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ question: question })
-                });
+    <div id="answerCard" class="answer-card">
 
-                const data = await response.json();
-                answer.innerText = data.answer;
-            } catch (error) {
-                answer.innerText = "Error connecting to VivaMate API.";
-            }
+        <h2>Exam Answer</h2>
+
+        <div id="answer"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+const API_URL =
+"https://zany-computing-machine-69j46xg7qwgr354x7-8000.app.github.dev/ask";
+
+
+async function askVivaMate() {
+
+    const question =
+        document.getElementById("question").value.trim();
+
+    const answer =
+        document.getElementById("answer");
+
+    const answerCard =
+        document.getElementById("answerCard");
+
+    const button =
+        document.getElementById("askButton");
+
+
+    if (!question) {
+
+        alert("Please enter a question.");
+
+        return;
+    }
+
+
+    answerCard.style.display = "block";
+
+    answer.className = "loading";
+
+    answer.innerText =
+        "VivaMate is preparing your exam answer...";
+
+    button.disabled = true;
+
+    button.innerText = "Thinking...";
+
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                question: question
+            })
+
+        });
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail || "API request failed"
+            );
+
         }
-    </script>
+
+
+        answer.className = "";
+
+        answer.innerText =
+            data.answer || "No answer received.";
+
+
+    } catch (error) {
+
+        answer.className = "";
+
+        answer.innerText =
+            "Error: " + error.message;
+
+    } finally {
+
+        button.disabled = false;
+
+        button.innerText = "Ask VivaMate";
+
+    }
+
+}
+
+</script>
+
 </body>
 </html>
