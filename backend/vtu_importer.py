@@ -1,4 +1,5 @@
 import re
+import html
 from urllib.request import Request, urlopen
 
 
@@ -22,11 +23,11 @@ def download_vtu_page():
         )
 
 
-def clean_html(html):
+def clean_html(page_html):
     text = re.sub(
         r"<script.*?</script>",
         " ",
-        html,
+        page_html,
         flags=re.DOTALL | re.IGNORECASE,
     )
 
@@ -38,16 +39,27 @@ def clean_html(html):
     )
 
     text = re.sub(r"<[^>]+>", "\n", text)
-    text = re.sub(r"&nbsp;", " ", text)
-    text = re.sub(r"&amp;", "&", text)
-    text = re.sub(r"\s+", " ", text)
+
+    text = html.unescape(text)
+
+    text = re.sub(
+        r"[ \t]+",
+        " ",
+        text,
+    )
+
+    text = re.sub(
+        r"\n\s*\n+",
+        "\n",
+        text,
+    )
 
     return text.strip()
 
 
 def fetch_official_vtu_data():
-    html = download_vtu_page()
-    text = clean_html(html)
+    page_html = download_vtu_page()
+    text = clean_html(page_html)
 
     return {
         "source": "Official VTU Website",
@@ -66,5 +78,6 @@ if __name__ == "__main__":
         "Content length:",
         data["content_length"],
     )
+
     print()
-    print(data["content"][:1000])
+    print(data["content"][:1500])
