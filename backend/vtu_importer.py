@@ -1,5 +1,6 @@
 import re
 import html
+from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 
 
@@ -23,61 +24,79 @@ def download_vtu_page():
         )
 
 
-def clean_html(page_html):
-    text = re.sub(
-        r"<script.*?</script>",
-        " ",
-        page_html,
-        flags=re.DOTALL | re.IGNORECASE,
+def clean_text(value):
+    value = re.sub(r"<[^>]+>", " ", value)
+    value = html.unescape(value)
+    value = re.sub(r"\s+", " ", value)
+
+    return value.strip()
+
+
+def extract_official_links(page_html):
+    link_pattern = re.compile(
+        r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',
+        re.IGNORECASE | re.DOTALL,
     )
 
-    text = re.sub(
-        r"<style.*?</style>",
-        " ",
-        text,
-        flags=re.DOTALL | re.IGNORECASE,
-    )
+    links = []
 
-    text = re.sub(r"<[^>]+>", "\n", text)
+    for href, label_html in link_pattern.findall(page_html):
+        label = clean_text(label_html)
+        url = urljoin(VTU_SYLLABUS_URL, href)
 
-    text = html.unescape(text)
+        searchable_text = (
+            label + " " + url
+        ).lower()
 
-    text = re.sub(
-        r"[ \t]+",
-        " ",
-        text,
-    )
+        if (
+            "2022" in searchable_text
+            or "2025" in searchable_text
+            or "syllabus" in searchable_text
+            or "scheme" in searchable_text
+        ):
+            links.append({
+                "title": label,
+                "url": url,
+            })
 
-    text = re.sub(
-        r"\n\s*\n+",
-        "\n",
-        text,
-    )
+    unique_links = []
 
-    return text.strip()
+    seen = set()
+
+    for link in links:
+        key = link["url"]
+
+        if key not in seen:
+            seen.add(key)
+            unique_links.append(link)
+
+    return unique_links
 
 
-def fetch_official_vtu_data():
+def fetch_official_vtu_links():
     page_html = download_vtu_page()
-    text = clean_html(page_html)
 
-    return {
-        "source": "Official VTU Website",
-        "url": VTU_SYLLABUS_URL,
-        "content_length": len(text),
-        "content": text,
-    }
+    return extract_official_links(page_html)
 
 
 if __name__ == "__main__":
-    data = fetch_official_vtu_data()
+    links = fetch_official_vtu_links()
 
-    print("Source:", data["source"])
-    print("URL:", data["url"])
     print(
-        "Content length:",
-        data["content_length"],
+        "Official VTU academic links found:",
+        len(links),
     )
 
     print()
-    print(data["content"][:1500])
+
+    for index, link in enumerate(
+        links[:100],
+        start=1,
+    ):
+        print(
+            f'{index}. {link["title"]}'
+        )
+        print(
+            f'   {link["url"]}'
+        )
+        print()
