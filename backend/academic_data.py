@@ -1,80 +1,130 @@
-VTU_SCHEMES = {
-    "2022": {
+from backend.vtu_importer import fetch_course_documents
+
+
+SCHEMES = [
+    {
+        "code": "2022",
         "name": "VTU 2022 Scheme",
-        "branches": {}
     },
-    "2025": {
+    {
+        "code": "2025",
         "name": "VTU 2025 Scheme",
-        "branches": {}
-    }
-}
+    },
+]
+
+
+_course_documents_cache = None
+
+
+def get_course_documents():
+    global _course_documents_cache
+
+    if _course_documents_cache is None:
+        _course_documents_cache = fetch_course_documents()
+
+    return _course_documents_cache
 
 
 def get_schemes():
-    return [
-        {
-            "code": code,
-            "name": data["name"]
-        }
-        for code, data in VTU_SCHEMES.items()
-    ]
+    return SCHEMES
 
 
-def get_branches(scheme):
-    scheme_data = VTU_SCHEMES.get(scheme, {})
+def get_subjects(scheme=None, search=None):
+    documents = get_course_documents()
 
-    return list(
-        scheme_data.get("branches", {}).keys()
+    subjects = {}
+
+    for document in documents:
+        document_scheme = document["scheme"]
+        course_code = document["course_code"]
+
+        if scheme and document_scheme != scheme:
+            continue
+
+        subject_key = (
+            document_scheme,
+            course_code,
+        )
+
+        if subject_key not in subjects:
+            subjects[subject_key] = {
+                "scheme": document_scheme,
+                "course_code": course_code,
+                "name": course_code,
+                "documents": [],
+            }
+
+        subjects[subject_key]["documents"].append({
+            "title": document["title"],
+            "filename": document["filename"],
+            "url": document["url"],
+        })
+
+    subject_list = list(subjects.values())
+
+    if search:
+        search_value = search.lower().strip()
+
+        subject_list = [
+            subject
+            for subject in subject_list
+            if (
+                search_value
+                in subject["course_code"].lower()
+                or search_value
+                in subject["name"].lower()
+            )
+        ]
+
+    subject_list.sort(
+        key=lambda subject: (
+            subject["scheme"],
+            subject["course_code"],
+        )
     )
 
-
-def get_semesters(scheme, branch):
-    branches = VTU_SCHEMES.get(
-        scheme, {}
-    ).get("branches", {})
-
-    branch_data = branches.get(branch, {})
-
-    return list(branch_data.keys())
+    return subject_list
 
 
-def get_subjects(scheme, branch, semester):
-    branches = VTU_SCHEMES.get(
-        scheme, {}
-    ).get("branches", {})
+def get_subject_by_code(course_code, scheme=None):
+    course_code = course_code.upper().strip()
 
-    branch_data = branches.get(branch, {})
+    subjects = get_subjects(
+        scheme=scheme,
+    )
 
-    return branch_data.get(str(semester), [])
+    for subject in subjects:
+        if subject["course_code"] == course_code:
+            return subject
+
+    return None
 
 
 def search_subjects(query, scheme=None):
-    query = query.lower().strip()
+    return get_subjects(
+        scheme=scheme,
+        search=query,
+    )
 
-    results = []
 
-    for scheme_code, scheme_data in VTU_SCHEMES.items():
+def get_subject_documents(course_code, scheme=None):
+    subject = get_subject_by_code(
+        course_code=course_code,
+        scheme=scheme,
+    )
 
-        if scheme and scheme_code != scheme:
-            continue
+    if subject is None:
+        return []
 
-        for branch, semesters in scheme_data["branches"].items():
+    return subject["documents"]
 
-            for semester, subjects in semesters.items():
 
-                for subject in subjects:
+def refresh_academic_data():
+    global _course_documents_cache
 
-                    code = subject["code"].lower()
-                    name = subject["name"].lower()
+    _course_documents_cache = fetch_course_documents()
 
-                    if query in code or query in name:
-
-                        results.append({
-                            "scheme": scheme_code,
-                            "branch": branch,
-                            "semester": semester,
-                            "code": subject["code"],
-                            "name": subject["name"]
-                        })
-
-    return results
+    return {
+        "message": "VTU academic data refreshed",
+        "documents": len(_course_documents_cache),
+    }
