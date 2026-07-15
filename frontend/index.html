@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,6 +48,27 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            background: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        select:focus,
+        textarea:focus {
+            border-color: #4f46e5;
+        }
+
         textarea {
             width: 100%;
             min-height: 130px;
@@ -56,10 +78,6 @@
             resize: vertical;
             font-size: 16px;
             outline: none;
-        }
-
-        textarea:focus {
-            border-color: #4f46e5;
         }
 
         button {
@@ -93,6 +111,18 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
+        .answer-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #selectedMarks {
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
         #answer {
             white-space: pre-wrap;
             line-height: 1.7;
@@ -116,136 +146,158 @@
             .answer-card {
                 padding: 18px;
             }
+
+            .answer-heading {
+                display: block;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <header class="header">
-        <h1 class="logo">VivaMate AI</h1>
-        <p class="subtitle">Your Engineering Exam Assistant</p>
-    </header>
+        <header class="header">
+            <h1 class="logo">VivaMate AI</h1>
+            <p class="subtitle">Your Engineering Exam Assistant</p>
+        </header>
 
-    <div class="card">
+        <div class="card">
 
-        <textarea
-            id="question"
-            placeholder="Ask an engineering exam question..."
-        ></textarea>
+            <label for="marks">
+                <strong>Select Answer Marks</strong>
+            </label>
 
-        <button id="askButton" onclick="askVivaMate()">
-            Ask VivaMate
-        </button>
+            <select id="marks">
+                <option value="2">2 Marks</option>
+                <option value="5" selected>5 Marks</option>
+                <option value="10">10 Marks</option>
+            </select>
+
+            <textarea
+                id="question"
+                placeholder="Ask an engineering exam question..."
+            ></textarea>
+
+            <button id="askButton" onclick="askVivaMate()">
+                Ask VivaMate
+            </button>
+
+        </div>
+
+        <div id="answerCard" class="answer-card">
+
+            <div class="answer-heading">
+                <h2>Exam Answer</h2>
+                <span id="selectedMarks"></span>
+            </div>
+
+            <div id="answer"></div>
+
+        </div>
 
     </div>
 
-    <div id="answerCard" class="answer-card">
-
-        <h2>Exam Answer</h2>
-
-        <div id="answer"></div>
-
-    </div>
-
-</div>
-
-<script>
-
-const API_URL =
-"https://zany-computing-machine-69j46xg7qwgr354x7-8000.app.github.dev/ask";
+    <script>
+        const API_URL =
+            "https://zany-computing-machine-69j46xg7qwgr354x7-8000.app.github.dev/ask";
 
 
-async function askVivaMate() {
+        async function askVivaMate() {
 
-    const question =
-        document.getElementById("question").value.trim();
+            const question =
+                document.getElementById("question").value.trim();
 
-    const answer =
-        document.getElementById("answer");
+            const marks =
+                parseInt(document.getElementById("marks").value);
 
-    const answerCard =
-        document.getElementById("answerCard");
+            const answer =
+                document.getElementById("answer");
 
-    const button =
-        document.getElementById("askButton");
+            const answerCard =
+                document.getElementById("answerCard");
 
+            const selectedMarks =
+                document.getElementById("selectedMarks");
 
-    if (!question) {
-
-        alert("Please enter a question.");
-
-        return;
-    }
+            const button =
+                document.getElementById("askButton");
 
 
-    answerCard.style.display = "block";
-
-    answer.className = "loading";
-
-    answer.innerText =
-        "VivaMate is preparing your exam answer...";
-
-    button.disabled = true;
-
-    button.innerText = "Thinking...";
+            if (!question) {
+                alert("Please enter a question.");
+                return;
+            }
 
 
-    try {
+            answerCard.style.display = "block";
 
-        const response = await fetch(API_URL, {
+            selectedMarks.innerText =
+                marks + " Marks Answer";
 
-            method: "POST",
+            answer.className = "loading";
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+            answer.innerText =
+                "VivaMate is preparing your exam answer...";
 
-            body: JSON.stringify({
-                question: question
-            })
+            button.disabled = true;
 
-        });
+            button.innerText = "Thinking...";
 
 
-        const data = await response.json();
+            try {
+
+                const response = await fetch(API_URL, {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        question: question,
+                        marks: marks
+                    })
+
+                });
 
 
-        if (!response.ok) {
+                const data = await response.json();
 
-            throw new Error(
-                data.detail || "API request failed"
-            );
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail || "API request failed"
+                    );
+                }
+
+
+                answer.className = "";
+
+                answer.innerText =
+                    data.answer || "No answer received.";
+
+
+            } catch (error) {
+
+                answer.className = "";
+
+                answer.innerText =
+                    "Error: " + error.message;
+
+            } finally {
+
+                button.disabled = false;
+
+                button.innerText = "Ask VivaMate";
+
+            }
 
         }
-
-
-        answer.className = "";
-
-        answer.innerText =
-            data.answer || "No answer received.";
-
-
-    } catch (error) {
-
-        answer.className = "";
-
-        answer.innerText =
-            "Error: " + error.message;
-
-    } finally {
-
-        button.disabled = false;
-
-        button.innerText = "Ask VivaMate";
-
-    }
-
-}
-
-</script>
+    </script>
 
 </body>
+
 </html>
