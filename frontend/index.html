@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>VivaMate AI</title>
 
     <style>
@@ -15,4 +14,615 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 42px;
+            color: #4f46e5;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        .card,
+        .answer-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            background: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            border-color: #4f46e5;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #4f46e5;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .search-results {
+            margin-top: 10px;
+        }
+
+        .subject-item {
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .subject-item:hover {
+            border-color: #4f46e5;
+            background: #f5f3ff;
+        }
+
+        .subject-code {
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        .subject-documents {
+            margin-top: 8px;
+        }
+
+        .document-link {
+            display: inline-block;
+            margin-top: 6px;
+            margin-right: 8px;
+            padding: 8px 12px;
+            background: #eef2ff;
+            color: #4338ca;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .selected-subject {
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-weight: bold;
+        }
+
+        .answer-card {
+            display: none;
+        }
+
+        .answer-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .answer-info {
+            color: #4f46e5;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        #answer {
+            white-space: pre-wrap;
+            line-height: 1.7;
+        }
+
+        .loading {
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            color: #6b7280;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            .logo {
+                font-size: 34px;
+            }
+
+            .card,
+            .answer-card {
+                padding: 18px;
+            }
+
+            .answer-heading {
+                display: block;
+            }
+
+            .answer-info {
+                text-align: left;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="header">
+            <h1 class="logo">VivaMate AI</h1>
+            <p class="subtitle">
+                VTU Engineering Student & Exam Assistant
+            </p>
+        </header>
+
+        <div class="card">
+
+            <h2>Find VTU Subject</h2>
+
+            <label for="scheme">Select Scheme</label>
+
+            <select id="scheme">
+                <option value="2025">VTU 2025 Scheme</option>
+                <option value="2022">VTU 2022 Scheme</option>
+            </select>
+
+            <label for="subjectSearch">
+                Search Subject or Course Code
+            </label>
+
+            <input
+                id="subjectSearch"
+                type="text"
+                placeholder="Example: 1BAIA103 or Mathematics"
+            >
+
+            <button onclick="searchSubjects()">
+                Search VTU Subjects
+            </button>
+
+            <div
+                id="subjectResults"
+                class="search-results"
+            ></div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>AI Exam Answer Generator</h2>
+
+            <div
+                id="selectedSubjectBox"
+                class="selected-subject"
+            >
+                Selected Subject: General Engineering
+            </div>
+
+            <label for="marks">Select Answer Marks</label>
+
+            <select id="marks">
+                <option value="2">2 Marks</option>
+                <option value="5" selected>5 Marks</option>
+                <option value="10">10 Marks</option>
+            </select>
+
+            <label for="question">Exam Question</label>
+
+            <textarea
+                id="question"
+                placeholder="Ask an engineering exam question..."
+            ></textarea>
+
+            <button
+                id="askButton"
+                onclick="askVivaMate()"
+            >
+                Ask VivaMate
+            </button>
+
+        </div>
+
+        <div
+            id="answerCard"
+            class="answer-card"
+        >
+
+            <div class="answer-heading">
+
+                <h2>Exam Answer</h2>
+
+                <div class="answer-info">
+                    <div id="selectedSubject"></div>
+                    <div id="selectedMarks"></div>
+                </div>
+
+            </div>
+
+            <div id="answer"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const API_BASE =
+            "https://zany-computing-machine-69j46xg7qwgr354x7-8000.app.github.dev";
+
+        let currentSubject = "General Engineering";
+
+
+        async function searchSubjects() {
+
+            const query =
+                document.getElementById(
+                    "subjectSearch"
+                ).value.trim();
+
+            const scheme =
+                document.getElementById(
+                    "scheme"
+                ).value;
+
+            const resultsBox =
+                document.getElementById(
+                    "subjectResults"
+                );
+
+
+            if (!query) {
+
+                alert(
+                    "Please enter a subject name or course code."
+                );
+
+                return;
+            }
+
+
+            resultsBox.innerHTML =
+                '<p class="loading">Searching official VTU subjects...</p>';
+
+
+            try {
+
+                const url =
+                    API_BASE +
+                    "/subjects/search/?query=" +
+                    encodeURIComponent(query) +
+                    "&scheme=" +
+                    encodeURIComponent(scheme);
+
+
+                const response = await fetch(url);
+
+                const data = await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail ||
+                        "Subject search failed"
+                    );
+
+                }
+
+
+                if (
+                    !data.results ||
+                    data.results.length === 0
+                ) {
+
+                    resultsBox.innerHTML =
+                        '<p class="empty-message">No VTU subject found.</p>';
+
+                    return;
+
+                }
+
+
+                resultsBox.innerHTML = "";
+
+
+                data.results.forEach(subject => {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className = "subject-item";
+
+
+                    let documentsHTML = "";
+
+
+                    if (
+                        subject.documents &&
+                        subject.documents.length > 0
+                    ) {
+
+                        documentsHTML =
+                            '<div class="subject-documents">';
+
+
+                        subject.documents.forEach(document => {
+
+                            documentsHTML +=
+                                '<a class="document-link" ' +
+                                'href="' +
+                                document.url +
+                                '" target="_blank" ' +
+                                'onclick="event.stopPropagation()">' +
+                                document.title +
+                                '</a>';
+
+                        });
+
+
+                        documentsHTML += "</div>";
+
+                    }
+
+
+                    item.innerHTML =
+                        '<div class="subject-code">' +
+                        subject.course_code +
+                        '</div>' +
+                        '<div>' +
+                        subject.name +
+                        '</div>' +
+                        documentsHTML;
+
+
+                    item.onclick = function () {
+
+                        selectSubject(
+                            subject.course_code,
+                            subject.name
+                        );
+
+                    };
+
+
+                    resultsBox.appendChild(item);
+
+                });
+
+
+            } catch (error) {
+
+                resultsBox.innerHTML =
+                    '<p class="empty-message">Error: ' +
+                    error.message +
+                    '</p>';
+
+            }
+
+        }
+
+
+        function selectSubject(
+            courseCode,
+            subjectName
+        ) {
+
+            currentSubject =
+                courseCode + " - " + subjectName;
+
+
+            document.getElementById(
+                "selectedSubjectBox"
+            ).innerText =
+                "Selected Subject: " +
+                currentSubject;
+
+
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        async function askVivaMate() {
+
+            const question =
+                document.getElementById(
+                    "question"
+                ).value.trim();
+
+            const marks =
+                parseInt(
+                    document.getElementById(
+                        "marks"
+                    ).value
+                );
+
+            const answer =
+                document.getElementById(
+                    "answer"
+                );
+
+            const answerCard =
+                document.getElementById(
+                    "answerCard"
+                );
+
+            const selectedMarks =
+                document.getElementById(
+                    "selectedMarks"
+                );
+
+            const selectedSubject =
+                document.getElementById(
+                    "selectedSubject"
+                );
+
+            const button =
+                document.getElementById(
+                    "askButton"
+                );
+
+
+            if (!question) {
+
+                alert("Please enter a question.");
+
+                return;
+
+            }
+
+
+            answerCard.style.display = "block";
+
+            selectedSubject.innerText =
+                currentSubject;
+
+            selectedMarks.innerText =
+                marks + " Marks Answer";
+
+            answer.className = "loading";
+
+            answer.innerText =
+                "VivaMate is preparing your exam answer...";
+
+            button.disabled = true;
+
+            button.innerText = "Thinking...";
+
+
+            try {
+
+                const response = await fetch(
+                    API_BASE + "/ask",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            question: question,
+                            marks: marks,
+                            subject: currentSubject
+                        })
+
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail ||
+                        "API request failed"
+                    );
+
+                }
+
+
+                answer.className = "";
+
+                answer.innerText =
+                    data.answer ||
+                    "No answer received.";
+
+
+            } catch (error) {
+
+                answer.className = "";
+
+                answer.innerText =
+                    "Error: " +
+                    error.message;
+
+
+            } finally {
+
+                button.disabled = false;
+
+                button.innerText =
+                    "Ask VivaMate";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
