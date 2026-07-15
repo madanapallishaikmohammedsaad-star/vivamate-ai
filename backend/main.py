@@ -5,10 +5,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.ai_engine import ask_vivamate
 from backend.academic_data import (
     get_schemes,
-    get_branches,
-    get_semesters,
     get_subjects,
+    get_subject_by_code,
     search_subjects,
+    get_subject_documents,
+    refresh_academic_data,
 )
 from backend.vtu_updates import (
     get_update_categories,
@@ -20,7 +21,7 @@ from backend.vtu_updates import (
 app = FastAPI(
     title="VivaMate AI API",
     description="VTU Engineering Student Assistant API",
-    version="2.0.0",
+    version="3.0.0",
 )
 
 
@@ -43,7 +44,8 @@ class QuestionRequest(BaseModel):
 def home():
     return {
         "message": "VivaMate AI API is running",
-        "version": "2.0.0",
+        "version": "3.0.0",
+        "source": "Official VTU academic documents",
     }
 
 
@@ -54,40 +56,17 @@ def schemes():
     }
 
 
-@app.get("/branches/{scheme}")
-def branches(scheme: str):
-    return {
-        "scheme": scheme,
-        "branches": get_branches(scheme),
-    }
-
-
-@app.get("/semesters/{scheme}/{branch}")
-def semesters(scheme: str, branch: str):
-    return {
-        "scheme": scheme,
-        "branch": branch,
-        "semesters": get_semesters(
-            scheme,
-            branch,
-        ),
-    }
-
-
-@app.get("/subjects/{scheme}/{branch}/{semester}")
+@app.get("/subjects")
 def subjects(
-    scheme: str,
-    branch: str,
-    semester: str,
+    scheme: str | None = None,
+    search: str | None = None,
 ):
     return {
         "scheme": scheme,
-        "branch": branch,
-        "semester": semester,
+        "search": search,
         "subjects": get_subjects(
-            scheme,
-            branch,
-            semester,
+            scheme=scheme,
+            search=search,
         ),
     }
 
@@ -99,11 +78,51 @@ def subject_search(
 ):
     return {
         "query": query,
+        "scheme": scheme,
         "results": search_subjects(
-            query,
-            scheme,
+            query=query,
+            scheme=scheme,
         ),
     }
+
+
+@app.get("/subjects/{course_code}")
+def subject_details(
+    course_code: str,
+    scheme: str | None = None,
+):
+    subject = get_subject_by_code(
+        course_code=course_code,
+        scheme=scheme,
+    )
+
+    if subject is None:
+        return {
+            "message": "Subject not found",
+            "course_code": course_code,
+        }
+
+    return subject
+
+
+@app.get("/subjects/{course_code}/documents")
+def subject_documents(
+    course_code: str,
+    scheme: str | None = None,
+):
+    return {
+        "course_code": course_code,
+        "scheme": scheme,
+        "documents": get_subject_documents(
+            course_code=course_code,
+            scheme=scheme,
+        ),
+    }
+
+
+@app.post("/academic/refresh")
+def academic_refresh():
+    return refresh_academic_data()
 
 
 @app.get("/updates/categories")
