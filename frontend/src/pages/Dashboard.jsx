@@ -1,19 +1,24 @@
 import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 export default function Dashboard() {
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100">
       <Sidebar />
 
-      <main className="flex-1 p-8">
-        <h1 className="text-4xl font-bold">
-          Dashboard
-        </h1>
+      <div className="flex-1 flex flex-col">
+        <Navbar />
 
-        <p className="text-gray-600 mt-2">
-          Welcome to VivaMate AI 🚀
-        </p>
-      </main>
+        <main className="flex-1 p-8">
+          <h1 className="text-4xl font-bold">
+            VivaMate AI Dashboard
+          </h1>
+
+          <p className="text-gray-600 mt-2">
+            We are building the future of engineering education 🚀
+          </p>
+        </main>
+      </div>
     </div>
   );
 }
