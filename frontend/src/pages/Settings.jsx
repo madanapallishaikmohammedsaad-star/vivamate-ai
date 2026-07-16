@@ -1,3 +1,3 @@
-export default function Subjects() {
-  return <h1>Subjects</h1>;
+export default function Settings() {
+  return <h1>Settings</h1>;
 }
