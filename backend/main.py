@@ -1,3 +1,6 @@
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from pathlib import Path
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,12 +21,25 @@ from backend.vtu_updates import (
 )
 
 
+from backend.question_paper_data import (
+    get_papers,
+    search_papers,
+    refresh_question_papers,
+)
+
 app = FastAPI(
     title="VivaMate AI API",
     description="VTU Engineering Student Assistant API",
     version="3.0.0",
 )
 
+STATIC_DIR = Path(__file__).parent / "static"
+
+app.mount(
+    "/static",
+    StaticFiles(directory=STATIC_DIR),
+    name="static",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,14 +56,17 @@ class QuestionRequest(BaseModel):
     subject: str = "General Engineering"
 
 
-@app.get("/")
+@app.get("/", include_in_schema=False)
 def home():
+    return FileResponse(STATIC_DIR / "index.html")
+
+@app.get("/api")
+def api_status():
     return {
         "message": "VivaMate AI API is running",
         "version": "3.0.0",
         "source": "Official VTU academic documents",
     }
-
 
 @app.get("/schemes")
 def schemes():
@@ -123,7 +142,39 @@ def subject_documents(
 @app.post("/academic/refresh")
 def academic_refresh():
     return refresh_academic_data()
+@app.get("/subjects/{course_code}/papers")
+def subject_papers(
+    course_code: str,
+    scheme: str | None = None,
+):
+    return {
+        "course_code": course_code,
+        "scheme": scheme,
+        "papers": get_papers(
+            course_code=course_code,
+            scheme=scheme,
+        ),
+    }
 
+
+@app.get("/papers/search/")
+def paper_search(
+    query: str,
+    scheme: str | None = None,
+):
+    return {
+        "query": query,
+        "scheme": scheme,
+        "results": search_papers(
+            query=query,
+            scheme=scheme,
+        ),
+    }
+
+
+@app.post("/papers/refresh")
+def papers_refresh():
+    return refresh_question_papers()
 
 @app.get("/updates/categories")
 def update_categories():
