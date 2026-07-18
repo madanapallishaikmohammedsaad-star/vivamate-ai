@@ -4,8 +4,8 @@ import { generateAnswer } from "../services/ai";
 
 export default function AIAnswer() {
   const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState([]);
 
   async function handleGenerate() {
     if (!question.trim()) return;
