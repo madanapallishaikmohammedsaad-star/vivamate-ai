@@ -1,6 +1,6 @@
-import ChatBubble from "../components/ChatBubble";
 import { useState } from "react";
-import { Sparkles, Copy, Trash2 } from "lucide-react";
+import { Sparkles, Trash2 } from "lucide-react";
+import ChatBubble from "../components/ChatBubble";
 import { generateAnswer } from "../services/ai";
 
 export default function AIAnswer() {
@@ -8,116 +8,136 @@ export default function AIAnswer() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
 
- async function handleGenerate() {
-  if (!question.trim()) return;
+  async function handleGenerate() {
+    if (!question.trim()) return;
 
-  const userQuestion = question;
+    const userQuestion = question;
 
-  setLoading(true);
-  setQuestion("");
+    setQuestion("");
+    setLoading(true);
 
-  try {
-    const result = await generateAnswer(userQuestion);
+    try {
+      const result = await generateAnswer(userQuestion);
 
-    setMessages((prev) => [
-      ...prev,
-      {
-        question: userQuestion,
-        answer: result,
-      },
-    ]);
-  } catch (error) {
-    console.error(error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          question: userQuestion,
+          answer: result,
+        },
+      ]);
+    } catch (error) {
+      console.error(error);
 
-    setMessages((prev) => [
-      ...prev,
-      {
-        question: userQuestion,
-        answer: "❌ Failed to generate answer.",
-      },
-    ]);
-  } finally {
-    setLoading(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          question: userQuestion,
+          answer: "❌ Failed to generate answer.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   }
-}
-  function copyAnswer(text) {
-  navigator.clipboard.writeText(text);
-  alert("Answer copied!");
-}
-  function clearAll() {
-  setQuestion("");
-  setMessages([]);
-}
+
+  function clearChat() {
+    setMessages([]);
+    setQuestion("");
+  }
+
   return (
-   <div className="max-w-5xl mx-auto h-screen flex flex-col p-6">
-     <div className="mb-6">
-  <h1 className="text-4xl font-bold">
-    🤖 VivaMate AI
-  </h1>
+    <div className="h-screen flex flex-col bg-gray-100">
 
-  <p className="text-gray-500">
-    Your Engineering AI Assistant
-  </p>
-</div>
+      {/* Header */}
 
-      <textarea
-        className="w-full h-44 border rounded-2xl p-5 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Example: Explain Operating System for 5 Marks..."
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-      />
+      <div className="bg-white shadow p-6">
+        <h1 className="text-3xl font-bold">
+          🤖 VivaMate AI
+        </h1>
 
-      <div className="flex gap-4 mt-6">
+        <p className="text-gray-500">
+          Your Engineering AI Assistant
+        </p>
+      </div>
 
-        <button
-          onClick={handleGenerate}
-          disabled={loading}
-          className="bg-blue-600 text-white px-8 py-3 rounded-xl flex items-center gap-2 hover:bg-blue-700 transition"
-        >
-          <Sparkles size={20} />
+      {/* Chat */}
 
-          {loading ? "Generating..." : "Generate Answer"}
-        </button>
+      <div className="flex-1 overflow-y-auto p-6">
 
-        <button
-          onClick={clearAll}
-          className="border px-6 py-3 rounded-xl flex items-center gap-2"
-        >
-          <Trash2 size={18} />
-          Clear
-        </button>
+        {messages.length === 0 && (
+          <div className="text-center text-gray-400 mt-20">
+            <h2 className="text-2xl font-semibold">
+              Welcome to VivaMate AI
+            </h2>
+
+            <p className="mt-3">
+              Ask any engineering question to get started.
+            </p>
+          </div>
+        )}
+
+        {messages.map((msg, index) => (
+          <div key={index}>
+            <ChatBubble
+              type="user"
+              text={msg.question}
+            />
+
+            <ChatBubble
+              type="ai"
+              text={msg.answer}
+            />
+          </div>
+        ))}
+
+        {loading && (
+          <div className="bg-white rounded-2xl p-5 shadow w-fit">
+            🤖 VivaMate AI is thinking...
+          </div>
+        )}
 
       </div>
 
-      {loading && (
-        <div className="mt-10 bg-blue-50 p-6 rounded-2xl">
-          🤖 VivaMate AI is thinking...
+      {/* Bottom Input */}
+
+      <div className="bg-white border-t p-5">
+
+        <div className="flex gap-3">
+
+          <textarea
+            rows={2}
+            className="flex-1 border rounded-2xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Ask any engineering question..."
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+
+          <div className="flex flex-col gap-3">
+
+            <button
+              onClick={handleGenerate}
+              disabled={loading}
+              className="bg-blue-600 text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-blue-700"
+            >
+              <Sparkles size={18} />
+
+              {loading ? "Generating..." : "Send"}
+            </button>
+
+            <button
+              onClick={clearChat}
+              className="border px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-gray-100"
+            >
+              <Trash2 size={18} />
+              Clear
+            </button>
+
+          </div>
+
         </div>
-      )}
 
-      <div className="mt-10 space-y-6">
-
-  <div className="mt-10 space-y-4">
-
-  {messages.map((msg, index) => (
-    <div key={index}>
-
-      <ChatBubble
-        type="user"
-        text={msg.question}
-      />
-
-      <ChatBubble
-        type="ai"
-        text={msg.answer}
-      />
-
-    </div>
-  ))}
-
-</div>
-
-</div>
+      </div>
 
     </div>
   );
