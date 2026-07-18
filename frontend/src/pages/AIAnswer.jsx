@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Sparkles, Trash2 } from "lucide-react";
 import ChatBubble from "../components/ChatBubble";
 import { generateAnswer } from "../services/ai";
@@ -8,6 +8,12 @@ export default function AIAnswer() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
 
+  const bottomRef = useRef(null);
+  useEffect(() => {
+  bottomRef.current?.scrollIntoView({
+    behavior: "smooth",
+  });
+}, [messages, loading]);
   async function handleGenerate() {
     if (!question.trim()) return;
 
