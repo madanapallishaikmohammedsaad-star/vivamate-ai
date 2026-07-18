@@ -96,7 +96,7 @@ export default function AIAnswer() {
             />
           </div>
         ))}
-        
+        <div ref={bottomRef}></div>
 
         {loading && (
           <div className="bg-white rounded-2xl p-5 shadow w-fit">
