@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VivaMate AI - Premium Student Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "secondary-container": "#8a4cfc",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface": "#191c1d",
+                        "tertiary": "#943700",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#dbe1ff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#b4c5ff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "surface-variant": "#e1e3e4",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#25005a",
+                        "surface": "#f8f9fa",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "outline-variant": "#c3c6d7",
+                        "surface-bright": "#f8f9fa",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2563eb",
+                        "on-background": "#191c1d",
+                        "surface-container": "#edeeef",
+                        "on-surface-variant": "#434655",
+                        "tertiary-container": "#bc4800",
+                        "primary": "#004ac6",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed": "#eaddff",
+                        "surface-container-highest": "#e1e3e4",
+                        "outline": "#737686",
+                        "surface-tint": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-container": "#fffbff",
+                        "surface-dim": "#d9dadb",
+                        "on-tertiary-container": "#ffede6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "secondary": "#712ae2",
+                        "on-tertiary-fixed-variant": "#7d2d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "40px",
+                        "section-padding": "64px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "mono-code": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "mono-code": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+        }
+        .dark .glass-panel {
+            background: rgba(46, 49, 50, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+        }
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        .gradient-primary {
+            background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen sticky left-0 top-0 border-r border-outline-variant/30 bg-white/70 dark:bg-surface-container/70 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] w-64 p-spacing-stack-md shrink-0">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="font-headline-md text-[20px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">VivaMate AI</h1>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-on-surface-variant/60">Premium Student Hub</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary dark:text-primary-fixed font-semibold bg-primary-container/10 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<!-- Other items from JSON -->
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-body-md text-body-md">AI Answer Generator</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-body-md text-body-md">Subjects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-body-md text-body-md">Previous Papers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">record_voice_over</span>
+<span class="font-body-md text-body-md">AI Viva</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md text-body-md">Smart Notes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">calculate</span>
+<span class="font-body-md text-body-md">CGPA Calculator</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-container-high/50 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-40 w-full bg-white/70 dark:bg-surface-container/70 backdrop-blur-xl border-b border-outline-variant/20 shadow-sm flex justify-between items-center h-16 px-gutter">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60">search</span>
+<input class="w-full bg-surface-container-low/50 border-none rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary/20 transition-all font-label-md text-label-md" placeholder="Search for subjects, topics or papers..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 ml-6">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:text-primary transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Alex Rivera</p>
+<p class="text-[11px] text-on-surface-variant">Computer Science, Sem 6</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/10" data-alt="A portrait of a young male engineering student with a confident expression, wearing a stylish minimalist grey hoodie. The lighting is soft and professional, set against a blurred academic background. The image has a clean, high-end light-mode aesthetic consistent with premium education platforms." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgw1pemIwId5GH1YHEFr3cdCgDVRQ9X84LiSmfeik-TQmPZto3WU8LkiAMRlLtowlS4TGN7kkjRht8Sxh7hR3ttkfZ-Zn11R_PfFp9lWzPYRoWn6BMXEufh-dGw97dPK5wrFlm7j4cda2ifrnYMgKCkPcQIpBEkW5sP13g_4WQ0_IOOstWzALa3ScRc_a-9aVURwgxg5Hn55k3-WC3clJVjfgTs9AYjIwWPoo-ARaovnEOUh8HP_v7JGs5NZ6htKlHXXpTc7ZBXyft"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-spacing-margin-page space-y-stack-lg max-w-[1400px] mx-auto w-full">
+<!-- Hero Section -->
+<section class="gradient-primary rounded-[18px] p-8 md:p-12 text-white relative overflow-hidden group">
+<div class="relative z-10 max-w-2xl">
+<span class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold mb-6 tracking-wide border border-white/10 uppercase">v2.4 Live Now</span>
+<h2 class="font-headline-lg text-headline-lg mb-4">Study Smarter with AI</h2>
+<p class="font-body-lg text-body-lg text-white/80 mb-10 max-w-xl leading-relaxed">Generate answers, explore syllabus, practice viva, and prepare for exams—all in one intelligent platform.</p>
+<div class="flex flex-wrap gap-4">
+<button class="px-8 py-4 rounded-xl bg-white text-primary font-semibold flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                Generate Answer
+                            </button>
+<button class="px-8 py-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold flex items-center gap-2 hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+                                Explore Subjects
+                            </button>
+</div>
+</div>
+<!-- Hero Image -->
+<div class="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block opacity-90 mix-blend-screen pointer-events-none">
+<img class="w-full h-full object-contain object-right transform translate-x-12 translate-y-8 scale-110 group-hover:scale-115 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-m7s1lUAgQHWH0cAfUiIYXlnXqIDALOSdGOB5wXs5t9t49UozJSghbeMwBB3KX1H1WcZOtW3SJmQk8cbF6eCrdpIrc9Om9l_LzJakfp3cC9UYm8_Re9lQqQZy4GnEsWl_FS8qGawKCkq4vXH2MYjfY2mIH4ZzMxItMwtpv6fmoF-XGj1ZbxQTwA5plUc4qigLHmHYLat0thLse1iyapZ5fK-uV70eMFhaLB2EWfYnwJV53fBG8mBSzVmwZN3HvK98V4KGeiKBh5Zy"/>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Column Left: Actions & Plan -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Quick Actions Grid -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md">Quick Actions</h3>
+<button class="text-primary font-semibold text-label-md hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Action Cards -->
+<div class="glass-panel card-shadow p-6 action-card transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<h4 class="font-semibold text-on-surface mb-1">AI Generator</h4>
+<p class="text-xs text-on-surface-variant">Instant exam answers</p>
+</div>
+<div class="glass-panel card-shadow p-6 action-card transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">map</span>
+</div>
+<h4 class="font-semibold text-on-surface mb-1">VTU Syllabus</h4>
+<p class="text-xs text-on-surface-variant">Updated curriculum</p>
+</div>
+<div class="glass-panel card-shadow p-6 action-card transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<h4 class="font-semibold text-on-surface mb-1">Previous Papers</h4>
+<p class="text-xs text-on-surface-variant">Past 5 years solved</p>
+</div>
+<div class="glass-panel card-shadow p-6 action-card transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 mb-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">record_voice_over</span>
+</div>
+<h4 class="font-semibold text-on-surface mb-1">AI Viva Practice</h4>
+<p class="text-xs text-on-surface-variant">Voice-based drills</p>
+</div>
+<div class="glass-panel card-shadow p-6 action-card transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center text-pink-600 mb-4 group-hover:bg-pink-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h4 class="font-semibold text-on-surface mb-1">Smart Notes</h4>
+<p class="text-xs text-on-surface-variant">Concise key points</p>
+</div>
+<div class="glass-panel card-shadow p-6 action-card transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center text-cyan-600 mb-4 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<h4 class="font-semibold text-on-surface mb-1">CGPA Calc</h4>
+<p class="text-xs text-on-surface-variant">Instant estimations</p>
+</div>
+</div>
+</section>
+<!-- Today's Plan & Activity Timeline -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-panel card-shadow p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-semibold text-lg">Today's Study Plan</h3>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">2/4 Done</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low">
+<input checked="" class="rounded text-primary focus:ring-primary h-5 w-5 border-outline-variant" type="checkbox"/>
+<div class="flex-1">
+<p class="text-sm font-semibold line-through opacity-50">DBMS Unit 2: Transaction</p>
+<div class="w-full bg-outline-variant/30 h-1.5 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-primary h-full w-full"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low">
+<input checked="" class="rounded text-primary focus:ring-primary h-5 w-5 border-outline-variant" type="checkbox"/>
+<div class="flex-1">
+<p class="text-sm font-semibold line-through opacity-50">AI Lab: BFS Implementation</p>
+<div class="w-full bg-outline-variant/30 h-1.5 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-primary h-full w-full"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-outline-variant/10 shadow-sm">
+<input class="rounded text-primary focus:ring-primary h-5 w-5 border-outline-variant" type="checkbox"/>
+<div class="flex-1">
+<p class="text-sm font-semibold">Network Security Intro</p>
+<div class="w-full bg-outline-variant/30 h-1.5 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-primary h-full w-[20%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-outline-variant/10 shadow-sm">
+<input class="rounded text-primary focus:ring-primary h-5 w-5 border-outline-variant" type="checkbox"/>
+<div class="flex-1">
+<p class="text-sm font-semibold">Practice Java Viva (Unit 1)</p>
+<div class="w-full bg-outline-variant/30 h-1.5 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-primary h-full w-0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel card-shadow p-6">
+<h3 class="font-semibold text-lg mb-6">Recent Activity</h3>
+<div class="space-y-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant/30">
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white z-10 shrink-0">
+<span class="material-symbols-outlined text-xs">check</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Generated DBMS answer</p>
+<p class="text-xs text-on-surface-variant">Chapter 4: Concurrency Control • 2h ago</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-white z-10 shrink-0">
+<span class="material-symbols-outlined text-xs">mic</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Practiced Java viva</p>
+<p class="text-xs text-on-surface-variant">Multithreading Module • 5h ago</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="w-6 h-6 rounded-full bg-tertiary-container flex items-center justify-center text-white z-10 shrink-0">
+<span class="material-symbols-outlined text-xs">bookmark</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Bookmarked 'Neural Networks'</p>
+<p class="text-xs text-on-surface-variant">From AI Previous Papers • Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column Right: Stats & Notifications -->
+<div class="space-y-8">
+<!-- Progress & Stats Card -->
+<section class="glass-panel card-shadow p-8 text-center">
+<h3 class="font-semibold text-lg mb-8">Learning Overview</h3>
+<div class="relative w-48 h-48 mx-auto mb-8">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="text-outline-variant/20 stroke-current" cx="50" cy="50" fill="transparent" r="40" stroke-width="8"></circle>
+<circle class="text-primary stroke-current progress-ring-circle" cx="50" cy="50" fill="transparent" r="40" stroke-linecap="round" stroke-width="8" style="stroke-dasharray: 251.2; stroke-dashoffset: 70.33;"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-4xl font-bold text-on-surface">72%</span>
+<span class="text-xs text-on-surface-variant font-medium">Weekly Goal</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+<p class="text-[20px] font-bold">14</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tight">Day Streak 🔥</p>
+</div>
+<div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+<p class="text-[20px] font-bold">32</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tight">Hrs Studied</p>
+</div>
+<div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+<p class="text-[20px] font-bold">185</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tight">AI Answers</p>
+</div>
+<div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+<p class="text-[20px] font-bold">8.4</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tight">Est. CGPA</p>
+</div>
+</div>
+</section>
+<!-- VTU Updates -->
+<section class="glass-panel card-shadow p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-semibold text-on-surface">VTU Updates</h3>
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+</div>
+<div class="space-y-4">
+<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer">
+<p class="text-[10px] font-bold text-primary mb-1 uppercase">EXAMS</p>
+<h4 class="text-sm font-semibold mb-2">Semester timetable released for June 2024.</h4>
+<button class="text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">Read More <span class="material-symbols-outlined text-[14px]">arrow_forward</span></button>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer">
+<p class="text-[10px] font-bold text-secondary mb-1 uppercase">RESULTS</p>
+<h4 class="text-sm font-semibold mb-2">Revaluation results for 5th Sem declared.</h4>
+<button class="text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">Read More <span class="material-symbols-outlined text-[14px]">arrow_forward</span></button>
+</div>
+</div>
+</section>
+<!-- AI Recommendations -->
+<section>
+<h3 class="font-semibold text-lg mb-4">AI Recommendations</h3>
+<div class="space-y-3">
+<div class="glass-panel p-4 flex items-start gap-4 border border-primary/10 shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+</div>
+<div>
+<h4 class="text-sm font-bold">Suggested Revision</h4>
+<p class="text-xs text-on-surface-variant">Review 'Graph Theory' for Discrete Math exam coming up in 3 days.</p>
+</div>
+</div>
+<div class="glass-panel p-4 flex items-start gap-4 border border-secondary/10 shadow-sm hover:shadow-md transition-all cursor-pointer">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">psychology</span>
+</div>
+<div>
+<h4 class="text-sm font-bold">Recommended Subject</h4>
+<p class="text-xs text-on-surface-variant">Explore 'Cloud Computing' elective based on your AI interests.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Floating Action Button - Only for Desktop Main Dashboard -->
+<button class="fixed bottom-8 right-8 w-14 h-14 rounded-full gradient-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform">auto_awesome</span>
+<div class="absolute right-full mr-4 bg-on-surface text-surface px-4 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm font-bold pointer-events-none shadow-lg">
+            Ask VivaMate AI
+        </div>
+</button>
+<script>
+        // Micro-interactions and Dark Mode toggle logic
+        // This is a placeholder for potential dark mode implementation
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Add hover effects or dynamic data updates here
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential dynamic background shift or glow effect
+            });
+        });
+    </script>
+</body></html>
