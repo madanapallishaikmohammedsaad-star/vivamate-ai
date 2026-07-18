@@ -1,9 +1,6 @@
 import { Copy, User, Bot } from "lucide-react";
 
-export default function ChatBubble({
-  type,
-  text,
-}) {
+export default function ChatBubble({ type, text }) {
   const isUser = type === "user";
 
   function copyText() {
@@ -26,11 +23,7 @@ export default function ChatBubble({
       >
         <div className="flex items-center gap-2 mb-3">
 
-          {isUser ? (
-            <User size={18} />
-          ) : (
-            <Bot size={18} />
-          )}
+          {isUser ? <User size={18} /> : <Bot size={18} />}
 
           <strong>
             {isUser ? "You" : "VivaMate AI"}
@@ -45,7 +38,7 @@ export default function ChatBubble({
         {!isUser && (
           <button
             onClick={copyText}
-            className="mt-5 flex items-center gap-2 text-sm bg-gray-100 px-3 py-2 rounded-lg hover:bg-gray-200"
+            className="mt-5 flex items-center gap-2 text-sm bg-gray-100 px-3 py-2 rounded-lg hover:bg-gray-200 text-black"
           >
             <Copy size={16} />
             Copy
