@@ -93,31 +93,48 @@ export default function AIAnswer() {
         </div>
       )}
 
-      {answer && (
-        <div className="mt-10 bg-white shadow-xl rounded-2xl p-8">
+      <div className="mt-10 space-y-6">
 
-          <div className="flex justify-between items-center mb-6">
+  {messages.map((msg, index) => (
 
-            <h2 className="text-2xl font-bold">
-              Generated Answer
-            </h2>
+    <div
+      key={index}
+      className="bg-white shadow-xl rounded-2xl p-8"
+    >
 
-            <button
-              onClick={copyAnswer}
-              className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg hover:bg-gray-200"
-            >
-              <Copy size={18} />
-              Copy
-            </button>
+      <h3 className="font-bold text-blue-600 mb-2">
+        Question
+      </h3>
 
-          </div>
+      <p className="mb-6">
+        {msg.question}
+      </p>
 
-          <div className="whitespace-pre-wrap leading-8 text-gray-700">
-            {answer}
-          </div>
+      <div className="flex justify-between items-center mb-4">
 
-        </div>
-      )}
+        <h3 className="font-bold text-green-600">
+          Answer
+        </h3>
+
+        <button
+          onClick={() => copyAnswer(msg.answer)}
+          className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg hover:bg-gray-200"
+        >
+          <Copy size={18} />
+          Copy
+        </button>
+
+      </div>
+
+      <div className="whitespace-pre-wrap leading-8 text-gray-700">
+        {msg.answer}
+      </div>
+
+    </div>
+
+  ))}
+
+</div>
 
     </div>
   );
