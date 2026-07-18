@@ -50,13 +50,15 @@ export default function AIAnswer() {
 }
   return (
    <div className="max-w-5xl mx-auto h-screen flex flex-col p-6">
-      <h1 className="text-4xl font-bold mb-2">
-        AI Answer Generator
-      </h1>
+     <div className="mb-6">
+  <h1 className="text-4xl font-bold">
+    🤖 VivaMate AI
+  </h1>
 
-      <p className="text-gray-500 mb-8">
-        Ask any engineering question and VivaMate AI will generate an exam-ready answer.
-      </p>
+  <p className="text-gray-500">
+    Your Engineering AI Assistant
+  </p>
+</div>
 
       <textarea
         className="w-full h-44 border rounded-2xl p-5 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
