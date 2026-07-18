@@ -49,8 +49,7 @@ export default function AIAnswer() {
   setMessages([]);
 }
   return (
-    <div className="max-w-5xl mx-auto p-8">
-
+   <div className="max-w-5xl mx-auto h-screen flex flex-col p-6">
       <h1 className="text-4xl font-bold mb-2">
         AI Answer Generator
       </h1>
