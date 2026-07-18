@@ -7,33 +7,46 @@ export default function AIAnswer() {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
 
-  async function handleGenerate() {
-    if (!question.trim()) return;
+ async function handleGenerate() {
+  if (!question.trim()) return;
 
-    setLoading(true);
-    setAnswer("");
+  const userQuestion = question;
 
-    try {
-      const result = await generateAnswer(question);
-      setAnswer(result);
-    } catch (error) {
-      console.error(error);
-      setAnswer("❌ Failed to generate answer.");
-    } finally {
-      setLoading(false);
-    }
+  setLoading(true);
+  setQuestion("");
+
+  try {
+    const result = await generateAnswer(userQuestion);
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        question: userQuestion,
+        answer: result,
+      },
+    ]);
+  } catch (error) {
+    console.error(error);
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        question: userQuestion,
+        answer: "❌ Failed to generate answer.",
+      },
+    ]);
+  } finally {
+    setLoading(false);
   }
-
-  function copyAnswer() {
-    navigator.clipboard.writeText(answer);
-    alert("Answer copied!");
-  }
-
+}
+  function copyAnswer(text) {
+  navigator.clipboard.writeText(text);
+  alert("Answer copied!");
+}
   function clearAll() {
-    setQuestion("");
-    setAnswer("");
-  }
-
+  setQuestion("");
+  setMessages([]);
+}
   return (
     <div className="max-w-5xl mx-auto p-8">
 
