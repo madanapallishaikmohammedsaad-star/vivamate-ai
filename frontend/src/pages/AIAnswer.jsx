@@ -96,6 +96,7 @@ export default function AIAnswer() {
             />
           </div>
         ))}
+        
 
         {loading && (
           <div className="bg-white rounded-2xl p-5 shadow w-fit">
@@ -117,6 +118,12 @@ export default function AIAnswer() {
             placeholder="Ask any engineering question..."
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
+            onKeyDown={(e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    handleGenerate();
+  }
+}}
           />
 
           <div className="flex flex-col gap-3">
