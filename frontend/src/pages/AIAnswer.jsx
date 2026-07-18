@@ -1,3 +1,4 @@
+import ChatBubble from "../components/ChatBubble";
 import { useState } from "react";
 import { Sparkles, Copy, Trash2 } from "lucide-react";
 import { generateAnswer } from "../services/ai";
