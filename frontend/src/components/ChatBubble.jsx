@@ -1,4 +1,6 @@
 import { Copy, User, Bot } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatBubble({ type, text }) {
   const isUser = type === "user";
@@ -31,9 +33,11 @@ export default function ChatBubble({ type, text }) {
 
         </div>
 
-        <div className="whitespace-pre-wrap leading-8">
-          {text}
-        </div>
+        <div className="prose max-w-none">
+  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+    {text}
+  </ReactMarkdown>
+</div>
 
         {!isUser && (
           <button

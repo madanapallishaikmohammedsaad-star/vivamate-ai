@@ -1,28 +1,21 @@
 import requests
 import os
 
-
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
 def call_ai(api_key, system_prompt, user_prompt):
     headers = {
         "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 
     data = {
         "model": "openrouter/free",
         "messages": [
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": user_prompt
-            }
-        ]
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
     }
 
     try:
@@ -30,21 +23,18 @@ def call_ai(api_key, system_prompt, user_prompt):
             API_URL,
             headers=headers,
             json=data,
-            timeout=60
+            timeout=60,
         )
 
         if response.status_code == 200:
             result = response.json()
-
-            print("MODEL USED:", result["model"])
-
             return result["choices"][0]["message"]["content"]
 
         print(response.text)
         return None
 
     except requests.exceptions.RequestException as error:
-        print("Connection error:", error)
+        print(error)
         return None
 
 
@@ -55,52 +45,52 @@ def ask_vivamate(question):
         return "Error: OPENROUTER_API_KEY is not set."
 
     generator_prompt = """
-You are VivaMate AI, an engineering university exam assistant.
+You are VivaMate AI, an expert engineering professor.
 
-Generate a technically accurate and exam-focused answer.
+Generate ONLY the final exam answer.
 
 Rules:
-- Use standard engineering terminology.
-- Match the answer length to the marks requested.
-- For 2 marks, give a definition and 2 to 3 key points.
-- For 5 marks, give a concise definition, working, essential equations and key points.
-- For 10 marks, give detailed explanation and derivation when required.
-- Define symbols used in equations.
-- Do not invent formulas.
-- Avoid unnecessary advanced information.
-- Do not mix languages.
-- Do not generate corrupted words.
+- Never explain your reasoning.
+- Never say "This answer should include..."
+- Never talk to the student.
+- Return only the final answer.
+
+Format:
+
+# Topic
+
+## Definition
+
+## Explanation
+
+## Key Points
+
+## Advantages (if applicable)
+
+## Disadvantages (if applicable)
+
+## Applications (if applicable)
+
+Use proper engineering terminology.
 """
 
     draft_answer = call_ai(
         api_key,
         generator_prompt,
-        question
+        question,
     )
 
     if draft_answer is None:
         return "VivaMate could not generate an answer."
 
     reviewer_prompt = """
-You are a strict engineering professor and technical reviewer.
+You are a strict engineering professor.
 
-Review the engineering answer provided by the user.
+Review the answer.
 
-Your task:
-1. Detect incorrect definitions.
-2. Detect incorrect equations.
-3. Detect incorrect circuit descriptions.
-4. Detect wrong component polarity or connections.
-5. Detect misleading engineering statements.
-6. Check whether the answer matches the requested marks.
-7. Correct every technical mistake you find.
+Correct technical mistakes.
 
-Return ONLY the corrected final exam answer.
-
-Do not discuss the review process.
-Do not say what was wrong.
-Do not mention the original answer.
-Do not add unnecessary advanced content.
+Return ONLY the corrected final answer.
 """
 
     review_input = f"""
@@ -108,7 +98,7 @@ QUESTION:
 
 {question}
 
-DRAFT ANSWER:
+ANSWER:
 
 {draft_answer}
 """
@@ -116,7 +106,7 @@ DRAFT ANSWER:
     final_answer = call_ai(
         api_key,
         reviewer_prompt,
-        review_input
+        review_input,
     )
 
     if final_answer is None:
