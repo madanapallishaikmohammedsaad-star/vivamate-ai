@@ -11,10 +11,16 @@ def call_ai(api_key, system_prompt, user_prompt):
     }
 
     data = {
-        "model": "openrouter/free",
+        "model": "deepseek/deepseek-r1:free",
         "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {
+                "role": "system",
+                "content": system_prompt,
+            },
+            {
+                "role": "user",
+                "content": user_prompt,
+            },
         ],
     }
 
@@ -29,17 +35,18 @@ def call_ai(api_key, system_prompt, user_prompt):
         if response.status_code == 200:
             result = response.json()
 
-print("========== AI RESPONSE ==========")
-print(result)
-print("=================================")
+            print("========== AI RESPONSE ==========")
+            print(result)
+            print("=================================")
 
-return result["choices"][0]["message"]["content"]
+            return result["choices"][0]["message"]["content"]
 
+        print("API ERROR:")
         print(response.text)
         return None
 
     except requests.exceptions.RequestException as error:
-        print(error)
+        print("Connection Error:", error)
         return None
 
 
@@ -52,13 +59,14 @@ def ask_vivamate(question):
     generator_prompt = """
 You are VivaMate AI, an expert engineering professor.
 
-Generate ONLY the final exam answer.
+Generate ONLY the final engineering exam answer.
 
 Rules:
 - Never explain your reasoning.
 - Never say "This answer should include..."
 - Never talk to the student.
-- Return only the final answer.
+- Never describe your process.
+- Return ONLY the final answer.
 
 Format:
 
@@ -93,7 +101,7 @@ You are a strict engineering professor.
 
 Review the answer.
 
-Correct technical mistakes.
+Correct any technical mistakes.
 
 Return ONLY the corrected final answer.
 """
