@@ -28,7 +28,12 @@ def call_ai(api_key, system_prompt, user_prompt):
 
         if response.status_code == 200:
             result = response.json()
-            return result["choices"][0]["message"]["content"]
+
+print("========== AI RESPONSE ==========")
+print(result)
+print("=================================")
+
+return result["choices"][0]["message"]["content"]
 
         print(response.text)
         return None
