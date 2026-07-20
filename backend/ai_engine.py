@@ -11,7 +11,7 @@ def call_ai(api_key, system_prompt, user_prompt):
     }
 
     data = {
-        "model": "deepseek/deepseek-r1:free",
+        "model": "google/gemma-3-27b-it:free",
         "messages": [
             {
                 "role": "system",
