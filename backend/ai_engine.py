@@ -1,128 +1,75 @@
-import requests
 import os
+import requests
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
+# Models are tried in order until one succeeds
+FREE_MODELS = [
+    "openai/gpt-oss-20b:free",
+    "google/gemma-4-31b-it:free",
+    "google/gemma-4-26b-a4b-it:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+]
+
 
 def call_ai(api_key, system_prompt, user_prompt):
+
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
 
-    data = {
-        "model": "google/gemma-3-27b-it:free",
-        "messages": [
-            {
-                "role": "system",
-                "content": system_prompt,
-            },
-            {
-                "role": "user",
-                "content": user_prompt,
-            },
-        ],
-    }
+    last_error = None
 
-    try:
-        response = requests.post(
-            API_URL,
-            headers=headers,
-            json=data,
-            timeout=60,
-        )
+    for model in FREE_MODELS:
 
-        if response.status_code == 200:
-            result = response.json()
+        print(f"\nTrying model: {model}")
 
-            print("========== AI RESPONSE ==========")
-            print(result)
-            print("=================================")
+        data = {
+            "model": model,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": system_prompt,
+                },
+                {
+                    "role": "user",
+                    "content": user_prompt,
+                },
+            ],
+        }
 
-            return result["choices"][0]["message"]["content"]
+        try:
 
-        print("API ERROR:")
-        print(response.text)
-        return None
+            response = requests.post(
+                API_URL,
+                headers=headers,
+                json=data,
+                timeout=90,
+            )
 
-    except requests.exceptions.RequestException as error:
-        print("Connection Error:", error)
-        return None
+            if response.status_code == 200:
 
+                result = response.json()
 
-def ask_vivamate(question):
-    api_key = os.getenv("OPENROUTER_API_KEY")
+                print(f"✅ Using model: {model}")
 
-    if not api_key:
-        return "Error: OPENROUTER_API_KEY is not set."
+                return result["choices"][0]["message"]["content"]
 
-    generator_prompt = """
-You are VivaMate AI, an expert engineering professor.
+            else:
 
-Generate ONLY the final engineering exam answer.
+                print(f"❌ {model} failed")
+                print(response.text)
 
-Rules:
-- Never explain your reasoning.
-- Never say "This answer should include..."
-- Never talk to the student.
-- Never describe your process.
-- Return ONLY the final answer.
+                last_error = response.text
 
-Format:
+        except requests.exceptions.RequestException as error:
 
-# Topic
+            print(f"Connection Error ({model})")
 
-## Definition
+            print(error)
 
-## Explanation
+            last_error = str(error)
 
-## Key Points
-
-## Advantages (if applicable)
-
-## Disadvantages (if applicable)
-
-## Applications (if applicable)
-
-Use proper engineering terminology.
-"""
-
-    draft_answer = call_ai(
-        api_key,
-        generator_prompt,
-        question,
-    )
-
-    if draft_answer is None:
-        return "VivaMate could not generate an answer."
-
-    reviewer_prompt = """
-You are a strict engineering professor.
-
-Review the answer.
-
-Correct any technical mistakes.
-
-Return ONLY the corrected final answer.
-"""
-
-    review_input = f"""
-QUESTION:
-
-{question}
-
-ANSWER:
-
-{draft_answer}
-"""
-
-    final_answer = call_ai(
-        api_key,
-        reviewer_prompt,
-        review_input,
-    )
-
-    if final_answer is None:
-        return draft_answer
-
-    return final_answer
+    return None
