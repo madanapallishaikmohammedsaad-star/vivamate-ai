@@ -1,0 +1,30 @@
+[
+    {
+        "code": "CSE",
+        "name": "Computer Science and Engineering"
+    },
+    {
+        "code": "AIML",
+        "name": "Artificial Intelligence and Machine Learning"
+    },
+    {
+        "code": "ISE",
+        "name": "Information Science and Engineering"
+    },
+    {
+        "code": "ECE",
+        "name": "Electronics and Communication Engineering"
+    },
+    {
+        "code": "EEE",
+        "name": "Electrical and Electronics Engineering"
+    },
+    {
+        "code": "ME",
+        "name": "Mechanical Engineering"
+    },
+    {
+        "code": "CE",
+        "name": "Civil Engineering"
+    }
+]
