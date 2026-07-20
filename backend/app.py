@@ -1,3 +1,4 @@
+from routes.syllabus import syllabus
 from flask import Flask, request
 from ai_engine import ask_vivamate
 from flask import Flask
