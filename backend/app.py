@@ -27,12 +27,15 @@ def generate_answer():
 
     data = request.get_json()
 
+    print("Received JSON:", data)
+
     question = data.get("question", "")
 
-    if not question.strip():
-        return {
-            "answer": "Please enter a question."
-        }
+    print("Question:", question)
+
+    return {
+        "answer": f"You asked: {question}"
+    }
 
     answer = ask_vivamate(question)
 
