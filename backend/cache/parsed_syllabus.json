@@ -7637,5 +7637,55 @@
     "course_title": "ASC/PCC",
     "credits": null,
     "modules": []
+  },
+  {
+    "scheme": "2025",
+    "source_file": "cache/vtu/2025/0013_1_-10_Scheme_10archisch.pdf",
+    "document_type": "scheme",
+    "semester": 7,
+    "course_code": "2BAT101",
+    "course_title": "IPCC",
+    "credits": null,
+    "modules": []
+  },
+  {
+    "scheme": "2025",
+    "source_file": "cache/vtu/2025/0014_Scheme_34idsch.pdf",
+    "document_type": "scheme",
+    "semester": null,
+    "course_code": "2BBI101",
+    "course_title": "IPCC",
+    "credits": null,
+    "modules": []
+  },
+  {
+    "scheme": "2025",
+    "source_file": "cache/vtu/2025/0015_1_-_8_Scheme_38bplannsch.pdf",
+    "document_type": "scheme",
+    "semester": 1,
+    "course_code": "2BPLN101",
+    "course_title": "IPCC",
+    "credits": null,
+    "modules": []
+  },
+  {
+    "scheme": "2025",
+    "source_file": "cache/vtu/2025/0016_1_-_2_Scheme_intmplansch.pdf",
+    "document_type": "scheme",
+    "semester": null,
+    "course_code": "2BPLN101",
+    "course_title": "IPCC",
+    "credits": null,
+    "modules": []
+  },
+  {
+    "scheme": "2025",
+    "source_file": "cache/vtu/2025/0017_Scheme_2025-3-8-sem-Scheme-Engg-_AeronauticalEngg_Feb26.pdf",
+    "document_type": "scheme",
+    "semester": 3,
+    "course_code": "1BMAT301",
+    "course_title": "ASC",
+    "credits": null,
+    "modules": []
   }
 ]
