@@ -1,0 +1,32 @@
+[
+    {
+        "scheme": "2022",
+        "branch": "CSE",
+        "semesters": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        "scheme": "2025",
+        "branch": "CSE",
+        "semesters": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        "scheme": "2022",
+        "branch": "AIML",
+        "semesters": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        "scheme": "2025",
+        "branch": "AIML",
+        "semesters": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        "scheme": "2022",
+        "branch": "ISE",
+        "semesters": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        "scheme": "2025",
+        "branch": "ISE",
+        "semesters": [1, 2, 3, 4, 5, 6, 7, 8]
+    }
+]

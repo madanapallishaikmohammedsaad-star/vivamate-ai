@@ -30,3 +30,39 @@ def get_branches():
     ) as file:
 
         return json.load(file)
+@syllabus.route("/api/semesters/<scheme>/<branch>")
+def get_semesters(scheme, branch):
+
+    with open(
+        os.path.join(VTU_DIR, "semesters.json"),
+        "r",
+        encoding="utf-8",
+    ) as file:
+
+        data = json.load(file)
+
+    for item in data:
+        if item["scheme"] == scheme and item["branch"] == branch:
+            return item["semesters"]
+
+    return []
+@syllabus.route("/api/subjects/<scheme>/<branch>/<int:semester>")
+def get_subjects(scheme, branch, semester):
+
+    with open(
+        os.path.join(VTU_DIR, "subjects.json"),
+        "r",
+        encoding="utf-8",
+    ) as file:
+
+        data = json.load(file)
+
+    for item in data:
+        if (
+            item["scheme"] == scheme
+            and item["branch"] == branch
+            and item["semester"] == semester
+        ):
+            return item["subjects"]
+
+    return []

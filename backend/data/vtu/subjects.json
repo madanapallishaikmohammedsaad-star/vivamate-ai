@@ -1,0 +1,48 @@
+[
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "Data Structures"
+      },
+      {
+        "code": "BCS302",
+        "name": "Operating Systems"
+      },
+      {
+        "code": "BCS303",
+        "name": "Database Management Systems"
+      },
+      {
+        "code": "BCS304",
+        "name": "Computer Networks"
+      },
+      {
+        "code": "BCS305",
+        "name": "Software Engineering"
+      }
+    ]
+  },
+  {
+    "scheme": "2025",
+    "branch": "CSE",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "Programming in Python"
+      },
+      {
+        "code": "BCS302",
+        "name": "Data Structures"
+      },
+      {
+        "code": "BCS303",
+        "name": "Operating Systems"
+      }
+    ]
+  }
+]

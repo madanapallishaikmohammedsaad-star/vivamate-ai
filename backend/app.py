@@ -40,11 +40,6 @@ def generate_answer():
     return {
         "answer": answer
     }
-    answer = ask_vivamate(question)
-
-    return {
-        "answer": answer
-    }
 app.register_blueprint(syllabus)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
