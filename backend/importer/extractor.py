@@ -7,11 +7,12 @@ import fitz
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 CACHE_DIR = BASE_DIR / "cache" / "vtu"
+
 OUTPUT_FILE = BASE_DIR / "cache" / "parsed_syllabus.json"
+CHECKPOINT_FILE = BASE_DIR / "cache" / "extractor_checkpoint.json"
 
 
 def normalize_text(text):
-    """Clean PDF text while preserving useful line structure."""
     text = text.replace("\r", "\n")
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
@@ -19,7 +20,6 @@ def normalize_text(text):
 
 
 def extract_pdf_text(pdf_path):
-    """Extract all text from a PDF."""
     document = fitz.open(pdf_path)
 
     pages = []
@@ -33,7 +33,6 @@ def extract_pdf_text(pdf_path):
 
 
 def detect_scheme(pdf_path):
-    """Scheme comes from the cache folder: 2022 or 2025."""
     parent = pdf_path.parent.name
 
     if parent in {"2022", "2025"}:
@@ -43,29 +42,27 @@ def detect_scheme(pdf_path):
 
 
 def detect_semester(text, filename):
-    """Detect a single semester or a semester range."""
     combined = f"{filename}\n{text}".lower()
 
-    # Exact semester statements
-    patterns = [
-        (1, r"\bsemester\s+1\b|\b1st\s+semester\b"),
-        (2, r"\bsemester\s+2\b|\b2nd\s+semester\b"),
-        (3, r"\bsemester\s+3\b|\b3rd\s+semester\b"),
-        (4, r"\bsemester\s+4\b|\b4th\s+semester\b"),
-        (5, r"\bsemester\s+5\b|\b5th\s+semester\b"),
-        (6, r"\bsemester\s+6\b|\b6th\s+semester\b"),
-        (7, r"\bsemester\s+7\b|\b7th\s+semester\b"),
-        (8, r"\bsemester\s+8\b|\b8th\s+semester\b"),
-    ]
+    semester_patterns = {
+        1: [r"\bsemester\s+1\b", r"\b1st\s+semester\b"],
+        2: [r"\bsemester\s+2\b", r"\b2nd\s+semester\b"],
+        3: [r"\bsemester\s+3\b", r"\b3rd\s+semester\b"],
+        4: [r"\bsemester\s+4\b", r"\b4th\s+semester\b"],
+        5: [r"\bsemester\s+5\b", r"\b5th\s+semester\b"],
+        6: [r"\bsemester\s+6\b", r"\b6th\s+semester\b"],
+        7: [r"\bsemester\s+7\b", r"\b7th\s+semester\b"],
+        8: [r"\bsemester\s+8\b", r"\b8th\s+semester\b"],
+    }
 
-    for semester, pattern in patterns:
-        if re.search(pattern, combined, re.IGNORECASE):
-            return semester
+    for semester, patterns in semester_patterns.items():
+        for pattern in patterns:
+            if re.search(pattern, combined):
+                return semester
 
-    # Common VTU filename ranges
     filename_lower = filename.lower()
 
-    range_patterns = [
+    ranges = [
         ("3-4", r"3[- ]4"),
         ("5-8", r"5[- ]8"),
         ("5-6", r"5[- ]6"),
@@ -73,33 +70,14 @@ def detect_semester(text, filename):
         ("3-8", r"3[- ]8"),
     ]
 
-    for value, pattern in range_patterns:
+    for value, pattern in ranges:
         if re.search(pattern, filename_lower):
-            return value
-
-    # Roman numerals in some documents
-    roman = {
-        " i ": 1,
-        " ii ": 2,
-        " iii ": 3,
-        " iv ": 4,
-        " v ": 5,
-        " vi ": 6,
-        " vii ": 7,
-        " viii ": 8,
-    }
-
-    padded = f" {combined} "
-
-    for token, value in roman.items():
-        if f"semester{token}" in padded:
             return value
 
     return None
 
 
 def extract_course_codes(text):
-    """Extract likely VTU course codes."""
     patterns = [
         r"\b[A-Z]{2,6}\d{3}[A-Z]?\b",
         r"\b\d[A-Z]{3,6}\d{3}[A-Z]?\b",
@@ -121,71 +99,47 @@ def extract_first_course_code(text):
 
 
 def extract_course_title(text, course_code=None):
-    """
-    Try to find the course title immediately before
-    the first Semester/Course Code block.
-
-    Example:
-
-    Mathematics for Computer Science
-    Semester
-    3
-    Course Code
-    BCS301
-    """
-
     pattern = re.compile(
         r"(?P<title>.*?)"
         r"\n\s*Semester\s*\n"
         r"\s*(?:I{1,3}|IV|V|VI|VII|VIII|\d{1,2})\s*\n"
         r"\s*Course Code\s*\n"
-        r"\s*(?:"
-        r"[A-Z]{2,6}\d{3}[A-Z]?|"
-        r"\d[A-Z]{3,6}\d{3}[A-Z]?"
-        r")",
+        r"\s*(?:[A-Z]{2,6}\d{3}[A-Z]?|\d[A-Z]{3,6}\d{3}[A-Z]?)",
         re.IGNORECASE | re.DOTALL,
     )
 
     match = pattern.search(text)
 
     if match:
-        title = match.group("title").strip()
-
-        # Keep only the last few lines before Semester.
         lines = [
             line.strip()
-            for line in title.splitlines()
+            for line in match.group("title").splitlines()
             if line.strip()
         ]
 
-        if lines:
-            # Remove obvious document headers.
-            ignored = {
-                "ANNEXURE-II",
-                "ANNEXURE-III",
-                "ANNEXURE II",
-                "ANNEXURE III",
-            }
+        ignored = {
+            "ANNEXURE-II",
+            "ANNEXURE-III",
+            "ANNEXURE II",
+            "ANNEXURE III",
+        }
 
-            candidates = [
-                line
-                for line in lines[-8:]
-                if line.upper() not in ignored
-            ]
+        candidates = [
+            line
+            for line in lines[-8:]
+            if line.upper() not in ignored
+        ]
 
-            if candidates:
-                return candidates[-1]
+        if candidates:
+            return candidates[-1]
 
-    # Fallback: try text immediately before the course code.
     if course_code:
         index = text.find(course_code)
 
         if index != -1:
-            before = text[:index].splitlines()
-
             lines = [
                 line.strip()
-                for line in before[-10:]
+                for line in text[:index].splitlines()[-10:]
                 if line.strip()
             ]
 
@@ -202,76 +156,51 @@ def extract_credits(text):
         re.IGNORECASE,
     )
 
-    if match:
-        value = match.group(1)
+    if not match:
+        return None
 
-        try:
-            number = float(value)
-
-            return int(number) if number.is_integer() else number
-
-        except ValueError:
-            pass
-
-    return None
+    try:
+        number = float(match.group(1))
+        return int(number) if number.is_integer() else number
+    except ValueError:
+        return None
 
 
 def extract_modules(text):
-    """
-    Extract Module-1 through Module-5.
-
-    The parser stops each module at the next Module heading.
-    """
-
     pattern = re.compile(
         r"(?:^|\n)\s*"
-        r"(MODULE|Module)"
-        r"[\s\-]*"
-        r"([1-5])"
-        r"\s*"
-        r"[:\-]?\s*"
-        r"([^\n]*)\n"
+        r"MODULE[\s\-]*([1-5])"
+        r"\s*[:\-]?\s*([^\n]*)\n"
         r"(.*?)(?="
-        r"\n\s*(?:MODULE|Module)[\s\-]*[1-5]"
+        r"\n\s*MODULE[\s\-]*[1-5]"
         r"\s*[:\-]?"
         r"|\Z)",
         re.IGNORECASE | re.DOTALL,
     )
 
-    modules = []
+    modules = {}
 
     for match in pattern.finditer(text):
-        number = int(match.group(2))
-        title = match.group(3).strip()
-        content = match.group(4).strip()
+        number = int(match.group(1))
+        title = match.group(2).strip()
+        content = match.group(3).strip()
 
-        # Remove excessive whitespace.
         content = re.sub(r"\n{3,}", "\n\n", content)
 
-        modules.append(
-            {
-                "number": number,
-                "title": title,
-                "content": content,
-            }
-        )
-
-    # Make sure modules are unique and ordered.
-    unique = {}
-
-    for module in modules:
-        unique[module["number"]] = module
+        modules[number] = {
+            "number": number,
+            "title": title,
+            "content": content,
+        }
 
     return [
-        unique[number]
-        for number in sorted(unique)
+        modules[number]
+        for number in sorted(modules)
     ]
 
 
 def classify_document(pdf_path, text):
-    combined = (
-        f"{pdf_path.name}\n{text[:12000]}"
-    ).lower()
+    combined = f"{pdf_path.name}\n{text[:12000]}".lower()
 
     if "circular" in combined:
         return "circular"
@@ -294,19 +223,6 @@ def classify_document(pdf_path, text):
     return "other"
 
 
-def should_process(pdf_path, text):
-    """Only process documents that look useful for syllabus extraction."""
-    document_type = classify_document(
-        pdf_path,
-        text,
-    )
-
-    return document_type in {
-        "scheme",
-        "syllabus",
-    }
-
-
 def extract_record(pdf_path):
     try:
         text = extract_pdf_text(pdf_path)
@@ -314,25 +230,19 @@ def extract_record(pdf_path):
         if not text:
             return None
 
-        if not should_process(pdf_path, text):
+        document_type = classify_document(
+            pdf_path,
+            text,
+        )
+
+        if document_type not in {"scheme", "syllabus"}:
             return None
 
         scheme = detect_scheme(pdf_path)
-
-        semester = detect_semester(
-            text,
-            pdf_path.name,
-        )
-
+        semester = detect_semester(text, pdf_path.name)
         course_code = extract_first_course_code(text)
-
-        course_title = extract_course_title(
-            text,
-            course_code,
-        )
-
+        course_title = extract_course_title(text, course_code)
         credits = extract_credits(text)
-
         modules = extract_modules(text)
 
         return {
@@ -340,10 +250,7 @@ def extract_record(pdf_path):
             "source_file": str(
                 pdf_path.relative_to(BASE_DIR)
             ),
-            "document_type": classify_document(
-                pdf_path,
-                text,
-            ),
+            "document_type": document_type,
             "semester": semester,
             "course_code": course_code,
             "course_title": course_title,
@@ -352,9 +259,7 @@ def extract_record(pdf_path):
         }
 
     except Exception as error:
-
         return {
-            "scheme": detect_scheme(pdf_path),
             "source_file": str(
                 pdf_path.relative_to(BASE_DIR)
             ),
@@ -362,44 +267,46 @@ def extract_record(pdf_path):
         }
 
 
-def run():
-    print("=" * 80)
-    print("             VivaMate VTU Extractor")
-    print("=" * 80)
+def load_existing_records():
+    if not OUTPUT_FILE.exists():
+        return []
 
-    pdf_files = sorted(
-        CACHE_DIR.rglob("*.pdf")
+    try:
+        return json.loads(
+            OUTPUT_FILE.read_text(
+                encoding="utf-8"
+            )
+        )
+    except Exception:
+        return []
+
+
+def load_checkpoint():
+    if not CHECKPOINT_FILE.exists():
+        return 0
+
+    try:
+        data = json.loads(
+            CHECKPOINT_FILE.read_text(
+                encoding="utf-8"
+            )
+        )
+        return int(data.get("last_index", 0))
+    except Exception:
+        return 0
+
+
+def save_checkpoint(index):
+    CHECKPOINT_FILE.write_text(
+        json.dumps(
+            {"last_index": index},
+            indent=2,
+        ),
+        encoding="utf-8",
     )
 
-    print(
-        f"PDF files found: {len(pdf_files)}"
-    )
 
-    records = []
-    errors = 0
-
-    for index, pdf_path in enumerate(
-        pdf_files,
-        start=1,
-    ):
-
-        print(
-            f"[{index}/{len(pdf_files)}] "
-            f"{pdf_path.name}"
-        )
-
-        record = extract_record(
-            pdf_path
-        )
-
-        if record is None:
-            continue
-
-        if "error" in record:
-            errors += 1
-
-        records.append(record)
-
+def save_records(records):
     OUTPUT_FILE.parent.mkdir(
         parents=True,
         exist_ok=True,
@@ -414,10 +321,67 @@ def run():
         encoding="utf-8",
     )
 
+
+def run():
+    print("=" * 80)
+    print("        VivaMate VTU Extractor (Resume Safe)")
+    print("=" * 80)
+
+    pdf_files = sorted(
+        CACHE_DIR.rglob("*.pdf")
+    )
+
+    total = len(pdf_files)
+
+    print(f"PDF files found: {total}")
+
+    records = load_existing_records()
+    start_index = load_checkpoint()
+
+    print(
+        f"Existing records: {len(records)}"
+    )
+
+    print(
+        f"Resuming from file #{start_index + 1}"
+    )
+
+    for index in range(
+        start_index,
+        total,
+    ):
+
+        pdf_path = pdf_files[index]
+
+        print(
+            f"[{index + 1}/{total}] "
+            f"{pdf_path.name}"
+        )
+
+        record = extract_record(pdf_path)
+
+        if record is not None:
+            records.append(record)
+
+        # Save every 5 files.
+        if (
+            (index + 1) % 5 == 0
+            or index + 1 == total
+        ):
+            save_records(records)
+            save_checkpoint(index + 1)
+
+            print(
+                f"Checkpoint saved: "
+                f"{index + 1}/{total}"
+            )
+
+    save_records(records)
+    save_checkpoint(total)
+
     print("\n" + "=" * 80)
     print("Extraction completed.")
     print(f"Records: {len(records)}")
-    print(f"Errors: {errors}")
     print(f"Output: {OUTPUT_FILE}")
     print("=" * 80)
 
