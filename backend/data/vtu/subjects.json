@@ -1,47 +1,1193 @@
 [
   {
     "scheme": "2022",
+    "branch": null,
+    "semester": 1,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 2,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 3,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 4,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 5,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 6,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 7,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": null,
+    "semester": 8,
+    "subjects": []
+  },
+  {
+    "scheme": "2022",
+    "branch": "AIML",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "PCC/BSC"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "AIML",
+    "semester": 4,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "PCC/BSC"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "AIML",
+    "semester": 5,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "PCC/BSC"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "AIML",
+    "semester": 6,
+    "subjects": [
+      {
+        "code": "BAI601",
+        "name": "NATURAL LANGUAGE PROCESSING"
+      },
+      {
+        "code": "BAI654D",
+        "name": "INTRODUCTION TO ARTIFICIAL INTELLIGENCE"
+      },
+      {
+        "code": "BCS301",
+        "name": "PCC/BSC"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "AIML",
+    "semester": 7,
+    "subjects": [
+      {
+        "code": "BAI701",
+        "name": "Statistical Machine Learning For Data Science"
+      },
+      {
+        "code": "BAI701",
+        "name": "Machine Learning II"
+      },
+      {
+        "code": "BCS301",
+        "name": "PCC/BSC"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "AIML",
+    "semester": 8,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "PCC/BSC"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CHEM",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BCHEC202",
+        "name": "BCHEC202"
+      },
+      {
+        "code": "BCHEE202",
+        "name": "CourseCode:"
+      },
+      {
+        "code": "BCHEM202",
+        "name": "CourseCode:"
+      },
+      {
+        "code": "BCHES102",
+        "name": "BCHES102"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BCS508",
+        "name": "Environmental Studies and E-Waste Management"
+      },
+      {
+        "code": "BMATS101",
+        "name": "BMATS101"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 2,
+    "subjects": [
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
     "branch": "CSE",
     "semester": 3,
     "subjects": [
       {
         "code": "BCS301",
-        "name": "Data Structures"
+        "name": "C"
       },
       {
-        "code": "BCS302",
-        "name": "Operating Systems"
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
       },
       {
-        "code": "BCS303",
-        "name": "Database Management Systems"
+        "code": "BCS301",
+        "name": "C"
       },
       {
-        "code": "BCS304",
-        "name": "Computer Networks"
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
       },
       {
-        "code": "BCS305",
-        "name": "Software Engineering"
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "Mathematics for Computer Science"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 4,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 5,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      },
+      {
+        "code": "BCS501",
+        "name": "Software Engineering & Project Management"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 6,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS601",
+        "name": "CLOUD COMPUTING"
+      },
+      {
+        "code": "BCSL657B",
+        "name": "REACT"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 7,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS701",
+        "name": "Internet of Things"
+      },
+      {
+        "code": "BCS701",
+        "name": "Internet of Things"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      },
+      {
+        "code": "BCS714A",
+        "name": "Deep Learning"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "CSE",
+    "semester": 8,
+    "subjects": [
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      },
+      {
+        "code": "BCS301",
+        "name": "C"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BEC301",
+        "name": "AV Mathematics-III for EC Engineering"
+      },
+      {
+        "code": "BMATE101",
+        "name": "BMATE101"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 2,
+    "subjects": [
+      {
+        "code": "BEC601",
+        "name": "Embedded System Design"
+      },
+      {
+        "code": "BEC601",
+        "name": "Embedded System Design"
+      },
+      {
+        "code": "BEC601",
+        "name": "Embedded System Design"
+      },
+      {
+        "code": "BEC701",
+        "name": "Microwave Engineering and Antenna Theory"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BEC301",
+        "name": "PCC"
+      },
+      {
+        "code": "BEC306D",
+        "name": "Applied Numerical Methods for EC Engineering"
+      },
+      {
+        "code": "BEC501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BEC601",
+        "name": "IPCC"
+      },
+      {
+        "code": "BECL358E",
+        "name": "Typesetting using LaTeX"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 4,
+    "subjects": [
+      {
+        "code": "BEC301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 5,
+    "subjects": [
+      {
+        "code": "BEC501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BEC501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BECL504",
+        "name": "Digital Communication Lab"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 6,
+    "subjects": [
+      {
+        "code": "BEC501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BEC601",
+        "name": "IPCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 7,
+    "subjects": [
+      {
+        "code": "BEC501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BEC701",
+        "name": "IPCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ECE",
+    "semester": 8,
+    "subjects": [
+      {
+        "code": "BEC501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BEC701",
+        "name": "IPCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BEE301",
+        "name": "Mathematics-III for EE Engineering"
+      },
+      {
+        "code": "BEE302",
+        "name": "Transformers and Generators Lab"
+      },
+      {
+        "code": "BEE701",
+        "name": "Switchgear and Protection"
+      },
+      {
+        "code": "BEEE103",
+        "name": "BEEE103"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BEE301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 4,
+    "subjects": [
+      {
+        "code": "BEE301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 5,
+    "subjects": [
+      {
+        "code": "BEE501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 6,
+    "subjects": [
+      {
+        "code": "BEE501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 7,
+    "subjects": [
+      {
+        "code": "BEE501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "EEE",
+    "semester": 8,
+    "subjects": [
+      {
+        "code": "BEE501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ISE",
+    "semester": 6,
+    "subjects": [
+      {
+        "code": "BIS601",
+        "name": "FULL STACK DEVELOPMENT"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ISE",
+    "semester": 7,
+    "subjects": [
+      {
+        "code": "BIS701",
+        "name": "BIG DATA ANALYTICS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "MATH",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BMATC101",
+        "name": "BMATC101"
+      },
+      {
+        "code": "BMATC101",
+        "name": "BMATC101"
+      },
+      {
+        "code": "BMATC201",
+        "name": "BMATC201"
+      },
+      {
+        "code": "BMATE101",
+        "name": "BMATE101"
+      },
+      {
+        "code": "BMATE201",
+        "name": "BMATE201"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMATM101",
+        "name": "BMATM101"
+      },
+      {
+        "code": "BMATM201",
+        "name": "BMATM201"
+      },
+      {
+        "code": "BMATS101",
+        "name": "BMATS101"
+      },
+      {
+        "code": "BMATS201",
+        "name": "BMATS201"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "MATH",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BMAT301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMAT301",
+        "name": "PROBABILITY AND STATISTICS"
+      },
+      {
+        "code": "BMATBM301",
+        "name": "Mathematics-III for BM Engineering"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "AV Mathematics-III for EC Engineering"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "AV Mathematics-III for EC Engineering"
+      },
+      {
+        "code": "BMATEI301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMATEI301",
+        "name": "Mathematics-III for EI Engineering"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "MATH",
+    "semester": 4,
+    "subjects": [
+      {
+        "code": "BMAT301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMATEC301",
+        "name": "PCC"
+      },
+      {
+        "code": "BMATEI301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BMATM101",
+        "name": "BMATM101"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 3,
+    "subjects": [
+      {
+        "code": "BME301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 4,
+    "subjects": [
+      {
+        "code": "BME301",
+        "name": "PCC"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 5,
+    "subjects": [
+      {
+        "code": "BME501",
+        "name": "HSMS"
+      },
+      {
+        "code": "BME501",
+        "name": "Industrial Management & Entrepreneurship"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 6,
+    "subjects": [
+      {
+        "code": "BME501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 7,
+    "subjects": [
+      {
+        "code": "BME501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "ME",
+    "semester": 8,
+    "subjects": [
+      {
+        "code": "BME501",
+        "name": "HSMS"
+      }
+    ]
+  },
+  {
+    "scheme": "2022",
+    "branch": "PHYS",
+    "semester": 1,
+    "subjects": [
+      {
+        "code": "BPHYC102",
+        "name": "BPHYC102"
+      },
+      {
+        "code": "BPHYM102",
+        "name": "BPHYM102"
+      },
+      {
+        "code": "BPHYS102",
+        "name": "BPHYS102"
       }
     ]
   },
   {
     "scheme": "2025",
-    "branch": "CSE",
+    "branch": null,
+    "semester": 1,
+    "subjects": []
+  },
+  {
+    "scheme": "2025",
+    "branch": null,
+    "semester": 3,
+    "subjects": []
+  },
+  {
+    "scheme": "2025",
+    "branch": null,
+    "semester": 4,
+    "subjects": []
+  },
+  {
+    "scheme": "2025",
+    "branch": null,
+    "semester": 7,
+    "subjects": []
+  },
+  {
+    "scheme": "2025",
+    "branch": "CE",
     "semester": 3,
     "subjects": [
       {
-        "code": "BCS301",
-        "name": "Programming in Python"
-      },
-      {
-        "code": "BCS302",
-        "name": "Data Structures"
-      },
-      {
-        "code": "BCS303",
-        "name": "Operating Systems"
+        "code": "1BMAT301",
+        "name": "ASC/PCC"
       }
     ]
   }
