@@ -128,12 +128,13 @@ def call_ai(api_key, system_prompt, user_prompt):
     return None
 
 
-def ask_vivamate(question, marks=5, subject_id=None):
+def ask_vivamate(question, marks=5, subject_id=None, api_key=None):
     """Main AI entry point — VTU-aware with mark differentiation."""
-    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
+        api_key = os.getenv("OPENROUTER_API_KEY")
 
     if not api_key:
-        return "❌ OPENROUTER_API_KEY is not set. Please set it in Settings."
+        return "❌ API key missing. Open Settings and paste your OpenRouter API key (sk-or-v1-...), then try again."
 
     # Get subject context if subject_id provided
     subject_context = None

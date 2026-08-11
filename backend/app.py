@@ -47,7 +47,10 @@ def generate_answer():
     marks = data.get("marks", 5)
     subject_id = data.get("subject_id")
 
-    answer = ask_vivamate(question, marks=marks, subject_id=subject_id)
+    # API key from header (frontend sends X-API-Key) or env
+    api_key = request.headers.get("X-API-Key") or os.getenv("OPENROUTER_API_KEY")
+
+    answer = ask_vivamate(question, marks=marks, subject_id=subject_id, api_key=api_key)
     return {"answer": answer}
 
 
@@ -58,9 +61,10 @@ def generate_viva_question():
     subject_id = data.get("subject_id")
     topic = data.get("topic", "general")
 
+    api_key = request.headers.get("X-API-Key") or os.getenv("OPENROUTER_API_KEY")
     prompt = f"Generate one short viva interview question about {topic}. Return ONLY the question, nothing else."
 
-    answer = ask_vivamate(prompt, marks=2, subject_id=subject_id)
+    answer = ask_vivamate(prompt, marks=2, subject_id=subject_id, api_key=api_key)
     return {"question": answer}
 
 
@@ -72,6 +76,7 @@ def check_viva_answer():
     student_answer = data.get("answer", "")
     subject_id = data.get("subject_id")
 
+    api_key = request.headers.get("X-API-Key") or os.getenv("OPENROUTER_API_KEY")
     prompt = f"""You are an examiner. Evaluate this viva answer.
 Question: {question}
 Student's answer: {student_answer}
@@ -81,7 +86,7 @@ SCORE: X/10
 FEEDBACK: One or two sentences explaining if correct and what to improve.
 MISSING: Any key concepts the student missed."""
 
-    result = ask_vivamate(prompt, marks=2, subject_id=subject_id)
+    result = ask_vivamate(prompt, marks=2, subject_id=subject_id, api_key=api_key)
     return {"evaluation": result}
 
 
@@ -92,9 +97,10 @@ def generate_quiz():
     subject_id = data.get("subject_id")
     num_questions = data.get("num", 5)
 
+    api_key = request.headers.get("X-API-Key") or os.getenv("OPENROUTER_API_KEY")
     prompt = f"Generate {num_questions} multiple-choice quiz questions. For each: question, 4 options (A-D), and correct answer. Format as numbered list."
 
-    result = ask_vivamate(prompt, marks=5, subject_id=subject_id)
+    result = ask_vivamate(prompt, marks=5, subject_id=subject_id, api_key=api_key)
     return {"quiz": result}
 
 
