@@ -5,59 +5,31 @@ import {
   BookOpen,
   FileText,
   Mic,
+  Brain,
+  StickyNote,
   User,
   Settings,
 } from "lucide-react";
 
 const links = [
-  {
-    name: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/dashboard",
-  },
-  {
-    name: "AI Answer",
-    icon: Sparkles,
-    path: "/ai-answer",
-  },
-  {
-    name: "Subjects",
-    icon: BookOpen,
-    path: "/subjects",
-  },
-  {
-    name: "Previous Papers",
-    icon: FileText,
-    path: "/papers",
-  },
-  {
-    name: "AI Viva",
-    icon: Mic,
-    path: "/viva",
-  },
-  {
-    name: "Profile",
-    icon: User,
-    path: "/profile",
-  },
-  {
-    name: "Settings",
-    icon: Settings,
-    path: "/settings",
-  },
+  { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+  { name: "AI Answer", icon: Sparkles, path: "/ai-answer" },
+  { name: "Subjects", icon: BookOpen, path: "/subjects" },
+  { name: "Previous Papers", icon: FileText, path: "/papers" },
+  { name: "AI Viva", icon: Mic, path: "/viva" },
+  { name: "Quiz", icon: Brain, path: "/quiz" },
+  { name: "Notes", icon: StickyNote, path: "/notes" },
+  { name: "Profile", icon: User, path: "/profile" },
+  { name: "Settings", icon: Settings, path: "/settings" },
 ];
 
 export default function Sidebar() {
   return (
     <aside className="w-64 h-screen bg-white shadow-lg border-r p-6">
-      <h1 className="text-3xl font-bold text-blue-600 mb-8">
-        VivaMate AI
-      </h1>
-
-      <nav className="space-y-3">
+      <h1 className="text-3xl font-bold text-blue-600 mb-8">VivaMate AI</h1>
+      <nav className="space-y-2">
         {links.map((item) => {
           const Icon = item.icon;
-
           return (
             <NavLink
               key={item.name}
