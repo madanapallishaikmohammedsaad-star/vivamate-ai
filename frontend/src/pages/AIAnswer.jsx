@@ -112,10 +112,10 @@ export default function AIAnswer() {
   }
 
   return (
-    <div className="h-screen flex bg-gray-100">
+    <div className="flex h-[calc(100vh-6rem)] rounded-2xl overflow-hidden border bg-gray-100">
       <ChatSidebar chats={chats} currentChat={currentChat} setCurrentChat={setCurrentChat} createNewChat={createNewChat} deleteChat={deleteChat} />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col bg-white">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b shadow-sm p-5 z-10">
           <h1 className="text-3xl font-bold">🤖 VivaMate AI</h1>

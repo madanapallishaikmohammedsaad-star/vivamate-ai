@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/Layout";
 
 import Dashboard from "./pages/Dashboard";
 import AIAnswer from "./pages/AIAnswer";
@@ -14,17 +15,19 @@ import Settings from "./pages/Settings";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/ai-answer" element={<AIAnswer />} />
-      <Route path="/subjects" element={<Subjects />} />
-      <Route path="/papers" element={<PreviousPapers />} />
-      <Route path="/viva" element={<Viva />} />
-      <Route path="/quiz" element={<Quiz />} />
-      <Route path="/notes" element={<Notes />} />
-      <Route path="/updates" element={<VTUUpdates />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/settings" element={<Settings />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/ai-answer" element={<AIAnswer />} />
+        <Route path="/subjects" element={<Subjects />} />
+        <Route path="/papers" element={<PreviousPapers />} />
+        <Route path="/viva" element={<Viva />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/updates" element={<VTUUpdates />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+      </Route>
     </Routes>
   );
 }
