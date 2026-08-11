@@ -7,6 +7,7 @@ import {
   Mic,
   Brain,
   StickyNote,
+  Bell,
   User,
   Settings,
 } from "lucide-react";
@@ -16,6 +17,7 @@ const links = [
   { name: "AI Answer", icon: Sparkles, path: "/ai-answer" },
   { name: "Subjects", icon: BookOpen, path: "/subjects" },
   { name: "Previous Papers", icon: FileText, path: "/papers" },
+  { name: "VTU Updates", icon: Bell, path: "/updates" },
   { name: "AI Viva", icon: Mic, path: "/viva" },
   { name: "Quiz", icon: Brain, path: "/quiz" },
   { name: "Notes", icon: StickyNote, path: "/notes" },
@@ -27,7 +29,7 @@ export default function Sidebar() {
   return (
     <aside className="w-64 h-screen bg-white shadow-lg border-r p-6">
       <h1 className="text-3xl font-bold text-blue-600 mb-8">VivaMate AI</h1>
-      <nav className="space-y-2">
+      <nav className="space-y-1">
         {links.map((item) => {
           const Icon = item.icon;
           return (
@@ -43,7 +45,7 @@ export default function Sidebar() {
               }
             >
               <Icon size={20} />
-              <span>{item.name}</span>
+              <span className="text-sm">{item.name}</span>
             </NavLink>
           );
         })}

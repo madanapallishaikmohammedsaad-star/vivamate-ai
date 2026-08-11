@@ -7,6 +7,7 @@ import PreviousPapers from "./pages/PreviousPapers";
 import Viva from "./pages/Viva";
 import Quiz from "./pages/Quiz";
 import Notes from "./pages/Notes";
+import VTUUpdates from "./pages/VTUUpdates";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/viva" element={<Viva />} />
       <Route path="/quiz" element={<Quiz />} />
       <Route path="/notes" element={<Notes />} />
+      <Route path="/updates" element={<VTUUpdates />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
