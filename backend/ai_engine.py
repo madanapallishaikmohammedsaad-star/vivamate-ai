@@ -91,7 +91,7 @@ Scheme: {subject_context.get('scheme', '')} | Branch: {subject_context.get('bran
 RELEVANT MODULES:
 """
         for mod in subject_context.get("modules", []):
-            context_text += f"\nModule {mod['number']}: {mod['title']}\n{mod['content'][:500]}\n"
+                    context_text += f"\nModule {mod['module_number']}: {mod['title']}\n{mod['content'][:500]}\n"
 
         context_text += "\nUse the above syllabus context to make your answer relevant to the VTU curriculum."
         system_prompt += context_text
