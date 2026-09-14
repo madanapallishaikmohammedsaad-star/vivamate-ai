@@ -27,25 +27,32 @@ const links = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 h-screen bg-white shadow-lg border-r p-6">
-      <h1 className="text-3xl font-bold text-blue-600 mb-8">VivaMate AI</h1>
-      <nav className="space-y-1">
+    <aside className="hidden min-h-screen w-56 shrink-0 border-r bg-white p-4 shadow-sm md:block lg:w-64 lg:p-6">
+      <div className="mb-8 px-2">
+        <h1 className="text-2xl font-bold tracking-tight text-blue-600 lg:text-3xl">
+          VivaMate AI
+        </h1>
+        <p className="mt-1 text-xs text-gray-500">Your smart study companion</p>
+      </div>
+
+      <nav aria-label="Primary navigation" className="space-y-1">
         {links.map((item) => {
           const Icon = item.icon;
           return (
             <NavLink
-              key={item.name}
+              key={item.path}
               to={item.path}
+              aria-label={item.name}
               className={({ isActive }) =>
-                `flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${
+                `flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "text-gray-700 hover:bg-gray-100"
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 }`
               }
             >
-              <Icon size={20} />
-              <span className="text-sm">{item.name}</span>
+              <Icon size={19} aria-hidden="true" />
+              <span className="truncate">{item.name}</span>
             </NavLink>
           );
         })}
