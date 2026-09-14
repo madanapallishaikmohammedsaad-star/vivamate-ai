@@ -1,16 +1,19 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "",
+  timeout: 30000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Attach the OpenRouter API key from localStorage to every request
-api.interceptors.request.use((config) => {
-  const apiKey = localStorage.getItem("vivamate_api_key");
-  if (apiKey) {
-    config.headers["X-API-Key"] = apiKey;
-  }
-  return config;
-});
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const message = error.response?.data?.error || error.message || "Request failed";
+    return Promise.reject(new Error(message));
+  },
+);
 
 export default api;
