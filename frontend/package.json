@@ -1,8 +1,12 @@
 {
-  "name": "frontend",
+  "name": "vivamate-ai-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "VivaMate AI frontend for smarter student learning and exam preparation.",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
