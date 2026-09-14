@@ -19,7 +19,7 @@ app.register_blueprint(syllabus)
 
 @app.get("/")
 def home():
-    return {"message": "Welcome to VivaMate AI Backend", "version": "3.1.1"}
+    return {"message": "Welcome to VivaMate AI Backend", "version": "3.1.2"}
 
 
 @app.get("/health")
@@ -29,7 +29,6 @@ def health():
 
 @app.get("/api/dashboard")
 def dashboard():
-    # Temporary demo response until user accounts and progress persistence are added.
     return {
         "student": "Mohammed Saad",
         "semester": "3rd Semester",
@@ -49,7 +48,6 @@ def _json_body():
 
 
 def _api_key():
-    # Keep the OpenRouter secret on the server.
     return os.getenv("OPENROUTER_API_KEY")
 
 
@@ -58,20 +56,17 @@ def generate_answer():
     data, error = _json_body()
     if error:
         return error
-
     question = str(data.get("question", "")).strip()
     if not question:
         return jsonify({"error": "Please enter a question."}), 400
     if len(question) > 10000:
         return jsonify({"error": "Question is too long. Maximum length is 10,000 characters."}), 400
-
     try:
         marks = int(data.get("marks", 5))
     except (TypeError, ValueError):
         return jsonify({"error": "Marks must be a number."}), 400
     if marks not in (2, 5, 10, 15):
         return jsonify({"error": "Marks must be one of: 2, 5, 10, or 15."}), 400
-
     answer = ask_vivamate(question, marks=marks, subject_id=data.get("subject_id"), api_key=_api_key())
     return jsonify({"answer": answer})
 
@@ -81,7 +76,6 @@ def generate_viva_question():
     data, error = _json_body()
     if error:
         return error
-
     topic = str(data.get("topic", "general")).strip()[:500] or "general"
     prompt = f"Generate one short viva interview question about {topic}. Return ONLY the question, nothing else."
     answer = ask_vivamate(prompt, marks=2, subject_id=data.get("subject_id"), api_key=_api_key())
@@ -93,14 +87,12 @@ def check_viva_answer():
     data, error = _json_body()
     if error:
         return error
-
     question = str(data.get("question", "")).strip()
     student_answer = str(data.get("answer", "")).strip()
     if not question or not student_answer:
         return jsonify({"error": "Both question and answer are required."}), 400
     if len(student_answer) > 10000:
         return jsonify({"error": "Answer is too long. Maximum length is 10,000 characters."}), 400
-
     prompt = f"""You are an examiner. Evaluate this viva answer.
 Question: {question}
 Student's answer: {student_answer}
@@ -118,7 +110,6 @@ def generate_quiz():
     data, error = _json_body()
     if error:
         return error
-
     try:
         num_questions = int(data.get("num", 5))
     except (TypeError, ValueError):
@@ -126,10 +117,14 @@ def generate_quiz():
     if not 1 <= num_questions <= 20:
         return jsonify({"error": "num must be between 1 and 20."}), 400
 
-    prompt = (
-        f"Generate {num_questions} multiple-choice quiz questions. "
-        "For each: question, 4 options (A-D), and correct answer. Format as numbered list."
-    )
+    prompt = f"""Generate exactly {num_questions} multiple-choice questions for the selected VTU subject.
+Return ONLY valid JSON with this exact top-level shape:
+{{"questions":[{{"question":"...","options":["option A","option B","option C","option D"],"answer":0,"explanation":"short explanation"}}]}}
+Rules:
+- Every question must have exactly four options.
+- answer must be a zero-based integer from 0 to 3.
+- Do not use markdown fences.
+- Do not add any text outside the JSON object."""
     result = ask_vivamate(prompt, marks=5, subject_id=data.get("subject_id"), api_key=_api_key())
     return jsonify({"quiz": result})
 
