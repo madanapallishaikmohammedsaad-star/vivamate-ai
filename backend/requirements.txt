@@ -5,3 +5,4 @@ uvicorn>=0.25
 requests>=2.31
 pydantic>=2.0
 pymupdf>=1.23
+gunicorn>=22.0
