@@ -10,6 +10,7 @@ const filters = [
 export default function VTUUpdates() {
   const [notices, setNotices] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [reloadKey, setReloadKey] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -41,7 +42,7 @@ export default function VTUUpdates() {
     return () => {
       active = false;
     };
-  }, [filter]);
+  }, [filter, reloadKey]);
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 min-w-0">
@@ -81,7 +82,7 @@ export default function VTUUpdates() {
           <p className="text-gray-500 mt-2">{error}</p>
           <button
             type="button"
-            onClick={() => setFilter((current) => current)}
+            onClick={() => setReloadKey((value) => value + 1)}
             className="mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 font-medium text-white hover:bg-blue-700"
           >
             <RefreshCw size={16} />
