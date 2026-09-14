@@ -20,22 +20,18 @@ FREE_MODELS = [
     "nvidia/nemotron-3-super-120b-a12b:free",
 ]
 
-# === Mark-based answer instructions ===
-
 MARK_INSTRUCTIONS = {
     2: """2 MARKS — Short Answer
 - Give a brief definition (1-2 sentences)
 - One key point
 - Maximum 3-4 sentences total
 - No diagrams, no examples needed""",
-
     5: """5 MARKS — Medium Answer
 - Definition (1-2 sentences)
 - Working/explanation (3-4 sentences)
 - Key equations if relevant
 - One practical point or example
 - Keep concise — about 1 paragraph""",
-
     10: """10 MARKS — Detailed Answer
 - Clear definition
 - Principle/explanation with details
@@ -45,43 +41,40 @@ MARK_INSTRUCTIONS = {
 - Applications/examples
 - Use proper headings
 - About 2-3 paragraphs""",
-
     15: """15 MARKS — Full Exam Answer
 Write a comprehensive answer with:
 - Introduction (what it is, context)
 - Detailed explanation with working/principle
-- Diagrams described in text (e.g., "Diagram: Show a block diagram with X → Y → Z")
+- Diagrams described in text
 - Step-by-step process or algorithm
 - Relevant equations with brief explanation
 - Real-world example
 - Advantages and disadvantages
 - Applications
 - Conclusion
-Use proper headings and structure. This is a long-answer format.""",
+Use proper headings and structure.""",
 }
 
 
 def build_vtu_prompt(question, marks=5, subject_context=None):
     """Build an AI prompt enriched with VTU syllabus context."""
     mark_instruction = MARK_INSTRUCTIONS.get(marks, MARK_INSTRUCTIONS[5])
-
     system_prompt = f"""You are VivaMate AI — an expert VTU Engineering Professor with 20+ years of experience.
 
 You generate university exam answers that are accurate, clear, and exam-ready.
 
 STRICT RULES:
 - Write ONLY the answer. Never explain your reasoning process.
-- Never say "This answer should include..." or "A good answer is..."
-- Use markdown formatting with proper headings
-- Use standard engineering terminology
-- Use simple, clear English suitable for university students
-- If a diagram is needed, describe it in text (e.g., "Block Diagram: A → B → C")
-- If formulas are needed, write them clearly
+- Never say 'This answer should include...' or 'A good answer is...'
+- Use markdown formatting with proper headings.
+- Use standard engineering terminology.
+- Use simple, clear English suitable for university students.
+- If a diagram is needed, describe it in text.
+- If formulas are needed, write them clearly.
 
 ANSWER LENGTH RULES:
 {mark_instruction}"""
 
-    # Add VTU context if available
     if subject_context:
         context_text = f"""
 VTU SYLLABUS CONTEXT:
@@ -91,8 +84,7 @@ Scheme: {subject_context.get('scheme', '')} | Branch: {subject_context.get('bran
 RELEVANT MODULES:
 """
         for mod in subject_context.get("modules", []):
-                    context_text += f"\nModule {mod['module_number']}: {mod['title']}\n{mod['content'][:500]}\n"
-
+            context_text += f"\nModule {mod['module_number']}: {mod['title']}\n{mod['content'][:500]}\n"
         context_text += "\nUse the above syllabus context to make your answer relevant to the VTU curriculum."
         system_prompt += context_text
 
@@ -100,9 +92,12 @@ RELEVANT MODULES:
 
 
 def call_ai(api_key, system_prompt, user_prompt):
+    """Call OpenRouter, trying the configured free models in order."""
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
+        "HTTP-Referer": os.getenv("OPENROUTER_SITE_URL", "http://localhost:5173"),
+        "X-Title": os.getenv("OPENROUTER_APP_NAME", "VivaMate AI"),
     }
 
     for model in FREE_MODELS:
@@ -118,12 +113,11 @@ def call_ai(api_key, system_prompt, user_prompt):
             response = requests.post(API_URL, headers=headers, json=data, timeout=90)
             if response.status_code == 200:
                 result = response.json()
-                print(f"✅ Using model: {model}")
+                print(f"Using model: {model}")
                 return result["choices"][0]["message"]["content"]
-            else:
-                print(f"❌ {model} failed: {response.status_code}")
-        except requests.exceptions.RequestException as e:
-            print(f"Connection Error ({model}): {e}")
+            print(f"Model failed ({model}): {response.status_code}")
+        except (requests.exceptions.RequestException, ValueError, KeyError, IndexError) as error:
+            print(f"AI response error ({model}): {error}")
 
     return None
 
@@ -134,16 +128,19 @@ def ask_vivamate(question, marks=5, subject_id=None, api_key=None):
         api_key = os.getenv("OPENROUTER_API_KEY")
 
     if not api_key:
-        return "❌ API key missing. Open Settings and paste your OpenRouter API key (sk-or-v1-...), then try again."
+        return """# VivaMate AI
 
-    # Get subject context if subject_id provided
+❌ AI service is not configured on the server.
+
+Please ask the administrator to add `OPENROUTER_API_KEY` to the backend environment, then try again."""
+
     subject_context = None
     if subject_id:
         subject_context = fetchone_db("SELECT * FROM subjects WHERE id=?", (subject_id,))
         if subject_context:
             modules = query_db(
                 "SELECT module_number, title, content FROM modules WHERE subject_id=? ORDER BY module_number",
-                (subject_id,)
+                (subject_id,),
             )
             subject_context["modules"] = modules
 
@@ -162,5 +159,4 @@ Possible reasons:
 • Daily limit exceeded
 • OpenRouter server issue
 
-Please try again after a few minutes.
-"""
+Please try again after a few minutes."""
