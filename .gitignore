@@ -1,8 +1,24 @@
+# Dependencies and build output
 node_modules/
-backend/cache/
-backend/database/
-__pycache__/
-*.pyc
-.env
 dist/
 .vite/
+
+# Python cache and local runtime data
+__pycache__/
+*.py[cod]
+backend/cache/
+backend/database/
+*.sqlite
+*.sqlite3
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and OS/editor files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
