@@ -26,3 +26,7 @@ jobs:
 
       - name: Compile Python files
         run: python -m compileall -q backend
+
+      - name: Run backend smoke tests
+        working-directory: backend
+        run: python -m unittest -v test_app.py
