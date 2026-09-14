@@ -27,6 +27,7 @@ function App() {
         <Route path="/updates" element={<VTUUpdates />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
     </Routes>
   );
